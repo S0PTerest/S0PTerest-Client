@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 import { pinterestColors } from '../styles/color';
 import { ReactComponent as IPlus } from '../assets/iPlus.svg';
 import { ReactComponent as IOption } from '../assets/iOption.svg';
+import { Link } from 'react-router-dom';
 
 const noteList = [
   { title: '제목1', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
@@ -12,26 +13,39 @@ const noteList = [
 ];
 
 function NoteList() {
+  const [noteStatus, setNoteStatus] = useState(new Array(noteList.length).fill(false));
+  const toggleNoteStatus = (idx) => {
+    let newStatus = new Array(noteList.length).fill(false);
+    newStatus[idx] = !newStatus[idx];
+    setNoteStatus(newStatus);
+  };
+
   return (
     <StyledRoot>
-      <StyledCreateButton>
+      <StyledCreateButton to="/todo">
         <h1>노트 만들기</h1>
         <IPlus />
       </StyledCreateButton>
 
       <StyledNoteList>
-        {noteList.map((note) => (
-          <Note key={note.title} note={note} />
+        {noteList.map((note, idx) => (
+          <Note
+            key={note.title}
+            note={note}
+            noteStatus={noteStatus[idx]}
+            onClick={() => toggleNoteStatus(idx)}
+          />
         ))}
       </StyledNoteList>
     </StyledRoot>
   );
 }
 
-function Note({ note }) {
+function Note(props) {
+  const { note, noteStatus, onClick } = props;
   const { title, date, todo } = note;
   return (
-    <StyledNote>
+    <StyledNote onClick={onClick} status={noteStatus}>
       <StyledTitle>
         <h1>{title}</h1>
         <IOption />
@@ -51,10 +65,10 @@ const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
   width: 33.8rem;
-  overflow-y: scroll;
+  margin-left: 0.5rem;
 `;
 
-const StyledCreateButton = styled.div`
+const StyledCreateButton = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,11 +94,18 @@ const StyledNoteList = styled.div`
 const StyledNote = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 2.2rem 2rem 2.2rem;
+  padding: ${({ status }) => (status ? '2rem 2.2rem' : '0 2.2rem 2rem 2.2rem')};
   cursor: pointer;
+  border-radius: 1.8rem;
+  ${({ status }) =>
+    status &&
+    css`
+      background-color: ${pinterestColors.gray100};
+      border-bottom: none;
+    `}
 
   &:not(:last-child) {
-    border-bottom: 1.25px solid #e9e9e9;
+    border-bottom: ${({ status }) => !status && '1.25px solid #e9e9e9'};
     margin-bottom: 1.6rem;
   }
 `;
