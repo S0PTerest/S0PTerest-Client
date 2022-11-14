@@ -4,7 +4,7 @@ import Header from './Header';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import Board from '../pages/Board';
-import TODO from '../pages/TODO';
+import Todo from '../pages/Todo';
 
 function Router() {
   return (
@@ -15,7 +15,7 @@ function Router() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/board" element={<Board />}></Route>
-          <Route path="/TODO" element={<TODO />}></Route>
+          <Route path="/todo" element={<Todo />}></Route>
         </Routes>
       </BrowserRouter>
     </>

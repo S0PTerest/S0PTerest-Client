@@ -12,6 +12,7 @@ export const GlobalStyle = createGlobalStyle`
         margin: 0;
         line-height: 1.6;
         font-size: 62.5%;
+        font-family: 'Apple SD Gothic Neo';
     }
     * {
         box-sizing: border-box;
