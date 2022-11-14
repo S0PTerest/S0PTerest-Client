@@ -4,6 +4,13 @@ import { pinterestColors } from '../styles/color';
 import { ReactComponent as IPlus } from '../assets/iPlus.svg';
 import { ReactComponent as IOption } from '../assets/iOption.svg';
 
+const noteList = [
+  { title: '제목1', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
+  { title: '제목2', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
+  { title: '제목3', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
+  { title: '제목4', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
+];
+
 function NoteList() {
   return (
     <StyledRoot>
@@ -13,21 +20,26 @@ function NoteList() {
       </StyledCreateButton>
 
       <StyledNoteList>
-        <Note />
+        {noteList.map((note) => (
+          <Note key={note.title} note={note} />
+        ))}
       </StyledNoteList>
     </StyledRoot>
   );
 }
 
-function Note() {
+function Note({ note }) {
+  const { title, date, todo } = note;
   return (
     <StyledNote>
       <StyledTitle>
-        <h1>제목 영역</h1>
+        <h1>{title}</h1>
         <IOption />
       </StyledTitle>
       <StyledNoteInfo>
-        <span>2022년 11월 14일 (월)</span>
+        <span>
+          {date} &#183; {todo}
+        </span>
       </StyledNoteInfo>
     </StyledNote>
   );
@@ -50,6 +62,7 @@ const StyledCreateButton = styled.div`
   border: 1px solid #efefef;
   border-radius: 1rem;
   margin-bottom: 3rem;
+  cursor: pointer;
 
   & > h1 {
     font-weight: 700;
@@ -68,7 +81,12 @@ const StyledNote = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 2.2rem 2rem 2.2rem;
-  border-bottom: 1.25px solid #e9e9e9;
+  cursor: pointer;
+
+  &:not(:last-child) {
+    border-bottom: 1.25px solid #e9e9e9;
+    margin-bottom: 1.6rem;
+  }
 `;
 
 const StyledTitle = styled.div`
