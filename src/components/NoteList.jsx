@@ -13,9 +13,11 @@ const noteList = [
   { title: '제목4', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
 ];
 
+const dropBoxData = { text: '노트 옵션', options: ['삭제', '수정'] };
+
 function NoteList() {
   const [noteStatus, setNoteStatus] = useState(new Array(noteList.length).fill(false));
-  const [openModal, setOpenModal] = useState(new Array(noteList.length).fill(false));
+  const [openDropBox, setOpenDropBox] = useState(new Array(noteList.length).fill(false));
 
   const toggleNoteStatus = (e, idx) => {
     if (e.target.closest('div').id === 'option') return;
@@ -23,12 +25,12 @@ function NoteList() {
   };
 
   const openOptionModal = (idx) => {
-    changeStatus(idx, openModal, setOpenModal);
+    changeStatus(idx, openDropBox, setOpenDropBox);
   };
 
   const changeStatus = (idx, array, handler) => {
     let newStatus = new Array(noteList.length).fill(false);
-    if (array.some((val) => val)) {
+    if (array.some((val) => val) && array.indexOf(true) === idx) {
       handler(newStatus);
       return;
     }
@@ -50,7 +52,7 @@ function NoteList() {
             onClick={(e) => toggleNoteStatus(e, idx)}
             status={noteStatus[idx]}
           >
-            {openModal[idx] && <DropBox />}
+            {openDropBox[idx] && <DropBox text={dropBoxData.text} options={dropBoxData.options} />}
             <StyledTitle>
               <h1>{title}</h1>
               <div id="option">
@@ -86,7 +88,7 @@ const StyledCreateButton = styled(Link)`
   padding: 1.6rem 2rem;
   border: 1px solid #efefef;
   border-radius: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   cursor: pointer;
 
   & > h1 {
@@ -103,21 +105,21 @@ const StyledNoteList = styled.div`
 `;
 
 const StyledNote = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding: ${({ status }) => (status ? '2rem 2.2rem' : '0 2.2rem 2rem 2.2rem')};
+  padding: 2rem 2.2rem;
   cursor: pointer;
-  border-radius: 1.8rem;
   ${({ status }) =>
     status &&
     css`
       background-color: ${pinterestColors.gray100};
       border-bottom: none;
+      border-radius: 1.8rem;
     `}
 
   &:not(:last-child) {
     border-bottom: ${({ status }) => !status && '1.25px solid #e9e9e9'};
-    margin-bottom: 1.6rem;
   }
 `;
 
