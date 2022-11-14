@@ -1,7 +1,14 @@
 import React from 'react';
+import PinTitle from '../components/PinTitle';
+import PinGallery from '../components/PinGallery';
 
 function Board() {
-  return <div>Board</div>;
+  return (
+    <>
+      <PinTitle />
+      <PinGallery />
+    </>
+  );
 }
 
 export default Board;
