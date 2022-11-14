@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { pinterestColors } from '../styles/color';
 import { ReactComponent as IPlus } from '../assets/iPlus.svg';
 import { ReactComponent as IOption } from '../assets/iOption.svg';
 import { Link } from 'react-router-dom';
+import DropBox from '../components/common/DropBox';
 
 const noteList = [
   { title: '제목1', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
@@ -14,10 +15,25 @@ const noteList = [
 
 function NoteList() {
   const [noteStatus, setNoteStatus] = useState(new Array(noteList.length).fill(false));
-  const toggleNoteStatus = (idx) => {
+  const [openModal, setOpenModal] = useState(new Array(noteList.length).fill(false));
+
+  const toggleNoteStatus = (e, idx) => {
+    if (e.target.closest('div').id === 'option') return;
+    changeStatus(idx, noteStatus, setNoteStatus);
+  };
+
+  const openOptionModal = (idx) => {
+    changeStatus(idx, openModal, setOpenModal);
+  };
+
+  const changeStatus = (idx, array, handler) => {
     let newStatus = new Array(noteList.length).fill(false);
+    if (array.some((val) => val)) {
+      handler(newStatus);
+      return;
+    }
     newStatus[idx] = !newStatus[idx];
-    setNoteStatus(newStatus);
+    handler(newStatus);
   };
 
   return (
@@ -28,34 +44,29 @@ function NoteList() {
       </StyledCreateButton>
 
       <StyledNoteList>
-        {noteList.map((note, idx) => (
-          <Note
-            key={note.title}
-            note={note}
-            noteStatus={noteStatus[idx]}
-            onClick={() => toggleNoteStatus(idx)}
-          />
+        {noteList.map(({ title, date, todo }, idx) => (
+          <StyledNote
+            key={title}
+            onClick={(e) => toggleNoteStatus(e, idx)}
+            status={noteStatus[idx]}
+          >
+            {openModal[idx] && <DropBox />}
+            <StyledTitle>
+              <h1>{title}</h1>
+              <div id="option">
+                <IOption onClick={() => openOptionModal(idx)} />
+              </div>
+            </StyledTitle>
+
+            <StyledNoteInfo>
+              <span>
+                {date} &#183; {todo}
+              </span>
+            </StyledNoteInfo>
+          </StyledNote>
         ))}
       </StyledNoteList>
     </StyledRoot>
-  );
-}
-
-function Note(props) {
-  const { note, noteStatus, onClick } = props;
-  const { title, date, todo } = note;
-  return (
-    <StyledNote onClick={onClick} status={noteStatus}>
-      <StyledTitle>
-        <h1>{title}</h1>
-        <IOption />
-      </StyledTitle>
-      <StyledNoteInfo>
-        <span>
-          {date} &#183; {todo}
-        </span>
-      </StyledNoteInfo>
-    </StyledNote>
   );
 }
 
