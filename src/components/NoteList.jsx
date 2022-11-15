@@ -47,24 +47,22 @@ function NoteList() {
 
       <StyledNoteList>
         {noteList.map(({ title, date, todo }, idx) => (
-          <StyledNote
-            key={title}
-            onClick={(e) => toggleNoteStatus(e, idx)}
-            status={noteStatus[idx]}
-          >
+          <StyledNote key={title} status={noteStatus[idx]}>
             {openDropBox[idx] && <DropBox text={dropBoxData.text} options={dropBoxData.options} />}
-            <StyledTitle>
-              <h1>{title}</h1>
-              <div id="option">
-                <IOption onClick={() => openOptionModal(idx)} />
-              </div>
-            </StyledTitle>
+            <div onClick={(e) => toggleNoteStatus(e, idx)}>
+              <StyledTitle>
+                <h1>{title}</h1>
+                <div id="option">
+                  <IOption onClick={() => openOptionModal(idx)} />
+                </div>
+              </StyledTitle>
 
-            <StyledNoteInfo>
-              <span>
-                {date} &#183; {todo}
-              </span>
-            </StyledNoteInfo>
+              <StyledNoteInfo>
+                <span>
+                  {date} &#183; {todo}
+                </span>
+              </StyledNoteInfo>
+            </div>
           </StyledNote>
         ))}
       </StyledNoteList>

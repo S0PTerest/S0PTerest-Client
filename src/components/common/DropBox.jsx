@@ -44,7 +44,11 @@ const StyledOption = styled.span`
   font-size: 1.6rem;
   line-height: 1.9rem;
   color: ${pinterestColors.black};
+  border-radius: 1.5rem;
   &:not(:last-child) {
     margin-bottom: 1.6rem;
+  }
+  &:hover {
+    background-color: ${pinterestColors.gray100};
   }
 `;
