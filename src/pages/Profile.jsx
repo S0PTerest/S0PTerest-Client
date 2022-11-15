@@ -35,45 +35,39 @@ function Profile() {
 export default Profile;
 
 const StyledRoot = styled.div`
-  width: 1920px;
-  height: 963px; //header height 117px 고려한 값
+  width: 192rem;
+  height: 96.3rem; //header height 117px 고려한 값
   display: flex;
   /* background-color: #ff7070; */
 `;
 
 const StyledProfileContainer = styled.div`
-  width: 288px;
-  height: 500px;
-  margin-left: 4.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2.6rem; //header height: 117px 고려한 값
+  width: 28.8rem;
+  height: 50rem;
+  margin: 2.6rem 0 0 4.8rem;
+  padding: 3rem 0 3rem 0;
   border: 1px solid ${pinterestColors.gray200};
   border-radius: 1.4rem;
-  padding: 3rem 0 3rem 0;
 
   p {
     font-size: 2rem;
     font-weight: 300;
-    &:nth-child(3) {
-      color: ${pinterestColors.gray400};
-      margin-top: 0.5rem;
-      line-height: 100%;
-    }
-    &:nth-of-type(2) {
-      color: ${pinterestColors.black};
-    }
+    color: ${pinterestColors.gray400};
+    margin-top: 0.5rem;
+    line-height: 100%;
   }
 `;
 
 const StyledImageBox = styled.div`
-  width: 146px;
-  height: 146px;
-  border-radius: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 14.6rem;
+  height: 14.6rem;
+  border-radius: 70%;
   overflow: hidden;
   background-color: ${pinterestColors.gray200};
 
@@ -89,26 +83,29 @@ const StyledImage = styled.img`
 
 const StyledName = styled.h1`
   margin-top: 3.3rem;
-  margin-bottom: 0rem;
   font-size: 3.4rem;
   font-weight: 700;
   line-height: 100%;
 `;
 
 const StyledBoardContainer = styled.div`
-  width: 1584px;
-  height: 963px;
+  width: 158.4rem;
+  height: 96.3rem;
   padding: 3rem;
 `;
 
 const StyledIcon = styled.div`
   display: flex;
   gap: 1.1rem;
-  margin-top: 2rem;
-  margin-bottom: 5.3rem;
+  margin: 2rem 0 5.3rem 0;
 `;
 
 const StyledDesc = styled.div`
   display: flex;
   gap: 8.3rem;
+  p {
+    font-size: 2rem;
+    font-weight: 300;
+    color: ${pinterestColors.black};
+  }
 `;
