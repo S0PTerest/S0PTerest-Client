@@ -119,7 +119,8 @@ const StyledNote = styled.div`
     `}
 
   &:not(:last-child) {
-    border-bottom: ${({ status }) => !status && '1.25px solid #e9e9e9'};
+    border-bottom: ${({ status }) =>
+      !status ? '1.25px solid #e9e9e9' : '1.25px solid rgba(0,0,0,0)'};
   }
 `;
 
