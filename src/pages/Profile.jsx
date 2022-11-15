@@ -7,17 +7,21 @@ import { default as icShare } from '../asset/icon_share.svg';
 function Profile() {
   return (
     <StyledRoot>
-      <StyledProfileContainer>
-        <StyledImageBox>
+      <StyledProfileWrapper>
+        <StyledImageWrapper>
           {/* <StyledImage /> => 이미지가 있는 경우에 로드할 컴포넌트 */}
           <h1>K</h1>
-        </StyledImageBox>
+        </StyledImageWrapper>
         <StyledName>Kim Name</StyledName>
         <p>pdadf@gmail.com</p>
-        <StyledIcon>
-          <img src={icEdit} />
-          <img src={icShare} />
-        </StyledIcon>
+        <StyledIconWrapper>
+          <StyledIconBg>
+            <img src={icEdit} />
+          </StyledIconBg>
+          <StyledIconBg>
+            <img src={icShare} />
+          </StyledIconBg>
+        </StyledIconWrapper>
         <StyledDesc>
           <p>팔로워</p>
           <p>1</p>
@@ -26,7 +30,7 @@ function Profile() {
           <p>팔로잉</p>
           <p>1</p>
         </StyledDesc>
-      </StyledProfileContainer>
+      </StyledProfileWrapper>
       <StyledBoardContainer>보드 영역 입니다</StyledBoardContainer>
     </StyledRoot>
   );
@@ -41,7 +45,7 @@ const StyledRoot = styled.div`
   /* background-color: #ff7070; */
 `;
 
-const StyledProfileContainer = styled.div`
+const StyledProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -61,7 +65,7 @@ const StyledProfileContainer = styled.div`
   }
 `;
 
-const StyledImageBox = styled.div`
+const StyledImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,10 +98,20 @@ const StyledBoardContainer = styled.div`
   padding: 3rem;
 `;
 
-const StyledIcon = styled.div`
+const StyledIconWrapper = styled.div`
   display: flex;
   gap: 1.1rem;
   margin: 2rem 0 5.3rem 0;
+`;
+
+const StyledIconBg = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 70%;
+  background-color: ${pinterestColors.gray100};
 `;
 
 const StyledDesc = styled.div`
