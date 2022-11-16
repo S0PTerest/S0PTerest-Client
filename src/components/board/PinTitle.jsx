@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+// import { pinterestColors } from '../../styles/color';
+import { ReactComponent as IMenu } from '../../assets/iMenu.svg';
+import { ReactComponent as IClickedMenu } from '../../assets/iClickedMenu.svg';
 
 function PinTitle() {
+  const [isIconHover, setIsIconHover] = useState(false);
   return (
     <StyledRoot>
       <StyledTitle>
-        민본포_7조 제목이 길어진다면 (50자 제한이라고 함)
-        <img src="optionIcon.svg" alt="optionIcon" />
+        <span>민본포_7조 제목이 길어진다면 (50자 제한이라고 함)</span>
+        <span onMouseOver={() => setIsIconHover(true)} onMouseOut={() => setIsIconHover(false)}>
+          {isIconHover ? <IClickedMenu /> : <IMenu />}
+        </span>
       </StyledTitle>
 
       <StyledActiveUser>
@@ -30,8 +36,10 @@ const StyledTitle = styled.div`
   font-size: 3.4rem;
   font-weight: bold;
 
-  img {
+  & > span:nth-child(2) {
     margin-left: 2.2rem;
+    cursor: pointer;
+    vertical-align: sub;
   }
 `;
 

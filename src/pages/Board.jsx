@@ -1,6 +1,6 @@
 import React from 'react';
-import PinTitle from '../components/PinTitle';
-import PinGallery from '../components/PinGallery';
+import PinTitle from '../components/board/PinTitle';
+import PinGallery from '../components/board/PinGallery';
 
 function Board() {
   return (
