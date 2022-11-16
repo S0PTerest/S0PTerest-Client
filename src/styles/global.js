@@ -52,4 +52,7 @@ export const GlobalStyle = createGlobalStyle`
     input[type="checkbox"]:checked::after {
         display: block;
     }
+    a{
+        text-decoration:none;
+    }
 `;
