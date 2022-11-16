@@ -75,13 +75,13 @@ function NoteList() {
 
 function BoardItem() {
   return (
-    <StPinImageWrapper>
+    <StyledBoardItemWrapper>
       {Array.from({ length: 3 }, (_v, i) => i).map((idx) => (
-        <StImageWrapper key={idx} idx={idx}>
+        <StyledBoardItem key={idx} idx={idx}>
           <div></div>
-        </StImageWrapper>
+        </StyledBoardItem>
       ))}
-    </StPinImageWrapper>
+    </StyledBoardItemWrapper>
   );
 }
 
@@ -157,7 +157,7 @@ const StyledNoteInfo = styled.div`
   color: ${pinterestColors.gray400};
 `;
 
-const StPinImageWrapper = styled.article`
+const StyledBoardItemWrapper = styled.article`
   display: grid;
   grid-template-columns: 16.8rem;
   grid-template-rows: 9.5rem 9.3rem;
@@ -166,7 +166,7 @@ const StPinImageWrapper = styled.article`
   margin-top: 2.2rem;
 `;
 
-const StImageWrapper = styled.div`
+const StyledBoardItem = styled.div`
   height: 18.8rem;
   background-color: #d9d9d9;
 
