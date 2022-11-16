@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import NoteList from '../components/todo/NoteList';
+import Palette from '../components/todo/Palette';
 
 function Todo() {
   return (
@@ -9,6 +10,8 @@ function Todo() {
       <StyledMain>
         <NoteList />
         <StyledNote>Note</StyledNote>
+
+        <Palette />
       </StyledMain>
     </StyledRoot>
   );
@@ -27,4 +30,6 @@ const StyledMain = styled.main`
   display: flex;
 `;
 
-const StyledNote = styled.article``;
+const StyledNote = styled.article`
+  width: 100%;
+`;

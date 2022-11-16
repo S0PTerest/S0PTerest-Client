@@ -90,7 +90,7 @@ export default NoteList;
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30.3rem;
+  min-width: 30.3rem;
   margin: 0 2.1rem 0 0.5rem;
 `;
 
