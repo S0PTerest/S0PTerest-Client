@@ -16,8 +16,8 @@ const noteList = [
 const dropBoxData = { text: '노트 옵션', options: ['삭제', '수정'] };
 
 function NoteList() {
-  const [noteStatus, setNoteStatus] = useState(new Array(noteList.length).fill(false));
-  const [openDropBox, setOpenDropBox] = useState(new Array(noteList.length).fill(false));
+  const [noteStatus, setNoteStatus] = useState(new Array(noteList.length).fill('close'));
+  const [dropBoxStatus, setDropBoxStatus] = useState(new Array(noteList.length).fill('close'));
 
   const toggleNoteStatus = (e, idx) => {
     if (e.target.closest('div').id === 'option') return;
@@ -25,16 +25,16 @@ function NoteList() {
   };
 
   const openOptionModal = (idx) => {
-    changeStatus(idx, openDropBox, setOpenDropBox);
+    changeStatus(idx, dropBoxStatus, setDropBoxStatus);
   };
 
   const changeStatus = (idx, array, handler) => {
-    let newStatus = new Array(noteList.length).fill(false);
-    if (array.some((val) => val) && array.indexOf(true) === idx) {
+    let newStatus = new Array(noteList.length).fill('close');
+    if (array.some((val) => val) && array.indexOf('open') === idx) {
       handler(newStatus);
       return;
     }
-    newStatus[idx] = !newStatus[idx];
+    newStatus[idx] = newStatus[idx] === 'open' ? 'close' : 'open';
     handler(newStatus);
   };
 
@@ -47,8 +47,11 @@ function NoteList() {
 
       <StyledNoteList>
         {noteList.map(({ title, date, todo }, idx) => (
-          <StyledNote key={title} status={noteStatus[idx]}>
-            {openDropBox[idx] && <DropBox text={dropBoxData.text} options={dropBoxData.options} />}
+          <StyledNote key={title} isOpen={noteStatus[idx] === 'open'}>
+            {dropBoxStatus[idx] === 'open' && (
+              <DropBox text={dropBoxData.text} options={dropBoxData.options} />
+            )}
+
             <div onClick={(e) => toggleNoteStatus(e, idx)}>
               <StyledTitle>
                 <h1>{title}</h1>
@@ -58,15 +61,27 @@ function NoteList() {
               </StyledTitle>
 
               <StyledNoteInfo>
-                <span>
-                  {date} &#183; {todo}
-                </span>
+                {date} &#183; {todo}
               </StyledNoteInfo>
             </div>
+
+            {noteStatus[idx] === 'open' && <BoardItem />}
           </StyledNote>
         ))}
       </StyledNoteList>
     </StyledRoot>
+  );
+}
+
+function BoardItem() {
+  return (
+    <StPinImageWrapper>
+      {Array.from({ length: 3 }, (_v, i) => i).map((idx) => (
+        <StImageWrapper key={idx} idx={idx}>
+          <div></div>
+        </StImageWrapper>
+      ))}
+    </StPinImageWrapper>
   );
 }
 
@@ -75,8 +90,8 @@ export default NoteList;
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
-  width: 33.8rem;
-  margin-left: 0.5rem;
+  width: 30.3rem;
+  margin: 0 2.1rem 0 0.5rem;
 `;
 
 const StyledCreateButton = styled(Link)`
@@ -107,9 +122,10 @@ const StyledNote = styled.div`
   display: flex;
   flex-direction: column;
   padding: 2rem 2.2rem;
+  margin-top: ${({ isOpen }) => isOpen && '2.2rem'};
   cursor: pointer;
-  ${({ status }) =>
-    status &&
+  ${({ isOpen }) =>
+    isOpen &&
     css`
       background-color: ${pinterestColors.gray100};
       border-bottom: none;
@@ -117,8 +133,8 @@ const StyledNote = styled.div`
     `}
 
   &:not(:last-child) {
-    border-bottom: ${({ status }) =>
-      !status ? '1.25px solid #e9e9e9' : '1.25px solid rgba(0,0,0,0)'};
+    border-bottom: ${({ isOpen }) =>
+      !isOpen ? '1.25px solid #e9e9e9' : '1.25px solid rgba(0,0,0,0)'};
   }
 `;
 
@@ -135,10 +151,35 @@ const StyledTitle = styled.div`
 
 const StyledNoteInfo = styled.div`
   display: flex;
-  & > span {
-    font-weight: 400;
-    font-size: 1.4rem;
-    line-height: 1.7rem;
-    color: ${pinterestColors.gray400};
-  }
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  color: ${pinterestColors.gray400};
+`;
+
+const StPinImageWrapper = styled.article`
+  display: grid;
+  grid-template-columns: 16.8rem;
+  grid-template-rows: 9.5rem 9.3rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-top: 2.2rem;
+`;
+
+const StImageWrapper = styled.div`
+  height: 18.8rem;
+  background-color: #d9d9d9;
+
+  ${({ idx }) =>
+    idx === 1 &&
+    css`
+      grid-column: 2/3;
+      background-color: #a9a9a9;
+    `}
+  ${({ idx }) =>
+    idx === 2 &&
+    css`
+      grid-column: 2/3;
+      background-color: #c0c0c0;
+    `}
 `;
