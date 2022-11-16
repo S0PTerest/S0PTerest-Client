@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import NoteList from '../components/NoteList';
+import NoteList from '../components/todo/NoteList';
 
-function TODO() {
+function Todo() {
   return (
     <StyledRoot>
       <StyledTitle>제목</StyledTitle>
@@ -14,7 +14,7 @@ function TODO() {
   );
 }
 
-export default TODO;
+export default Todo;
 
 const StyledRoot = styled.div`
   display: flex;

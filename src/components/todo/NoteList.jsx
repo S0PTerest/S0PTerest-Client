@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { pinterestColors } from '../styles/color';
-import { ReactComponent as IPlus } from '../assets/iPlus.svg';
-import { ReactComponent as IOption } from '../assets/iOption.svg';
+import { pinterestColors } from '../../styles/color';
+import { ReactComponent as IPlus } from '../../assets/iPlus.svg';
+import { ReactComponent as IOption } from '../../assets/iOption.svg';
 import { Link } from 'react-router-dom';
-import DropBox from '../components/common/DropBox';
+import DropBox from '../common/DropBox';
 
 const noteList = [
   { title: '제목1', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },

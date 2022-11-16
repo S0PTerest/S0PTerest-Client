@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { pinterestColors } from '../../styles/color';
-import { default as icEdit } from '../../asset/icon_edit.svg';
-import { default as icShare } from '../../asset/icon_share.svg';
+import { default as icEdit } from '../../assets/icon_edit.svg';
+import { default as icShare } from '../../assets/icon_share.svg';
 
 function Account() {
   return (
