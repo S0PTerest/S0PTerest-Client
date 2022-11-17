@@ -15,6 +15,21 @@ import { default as iCheckbox } from '../../assets/iCheckbox.svg';
 const firstLineTools = [iBold, iItalic, iUnderline, iStrikethrough];
 const secondLineTools = [iBulletpoint, iNumberpoint, iCheckbox];
 
+const pinList = [
+  'https://images.unsplash.com/photo-1668396817444-402fec00939a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+  'https://images.unsplash.com/photo-1668457248686-cd6bc7ef1228?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+  'https://images.unsplash.com/photo-1668370477273-f18c110b2d46?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+  'https://images.unsplash.com/photo-1668584086743-ef5423409bc4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80',
+  'https://images.unsplash.com/photo-1665686376173-ada7a0031a85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+];
+
 function Palette() {
   const [isSelected, setIsSelected] = useState('textstyle');
 
@@ -37,25 +52,52 @@ function Palette() {
           </StyledTool>
         </div>
 
-        <StyledSaveButton>저장</StyledSaveButton>
+        <StyledSaveButton active={isSelected === 'pluspin'}>저장</StyledSaveButton>
       </StyledButtonWrapper>
 
-      <StyledToolWrapper>
-        <div>
-          {firstLineTools.map((tool) => (
-            <StyledTool key={tool}>
-              <img src={tool} />
-            </StyledTool>
-          ))}
-        </div>
-        <div>
-          {secondLineTools.map((tool) => (
-            <StyledTool key={tool}>
-              <img src={tool} />
-            </StyledTool>
-          ))}
-        </div>
-      </StyledToolWrapper>
+      {isSelected === 'textstyle' ? (
+        <StyledToolWrapper>
+          <div>
+            {firstLineTools.map((tool) => (
+              <StyledTool key={tool}>
+                <img src={tool} />
+              </StyledTool>
+            ))}
+          </div>
+          <div>
+            {secondLineTools.map((tool) => (
+              <StyledTool key={tool}>
+                <img src={tool} />
+              </StyledTool>
+            ))}
+          </div>
+        </StyledToolWrapper>
+      ) : (
+        <StyledPinWrapper>
+          <div>
+            {pinList.map((pin, idx) => {
+              if (idx < pinList.length / 2) {
+                return (
+                  <div key={idx}>
+                    <img src={pin} />
+                  </div>
+                );
+              }
+            })}
+          </div>
+          <div>
+            {pinList.map((pin, idx) => {
+              if (idx >= pinList.length / 2) {
+                return (
+                  <div key={idx}>
+                    <img src={pin} />
+                  </div>
+                );
+              }
+            })}
+          </div>
+        </StyledPinWrapper>
+      )}
     </StyledRoot>
   );
 }
@@ -65,7 +107,7 @@ export default Palette;
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 32.1rem;
+  width: 32.1rem;
   height: 100%;
   background: ${pinterestColors.white};
   box-shadow: 0 0 1.8rem rgba(0, 0, 0, 0.06);
@@ -111,12 +153,12 @@ const StyledTool = styled(Background)`
 const StyledSaveButton = styled.button`
   padding: 1.5rem 2rem 1.3rem 2rem;
   border: none;
-  background-color: ${pinterestColors.gray200};
   border-radius: 3rem;
   font-weight: 700;
   font-size: 1.8rem;
   line-height: 2.2rem;
-  color: ${pinterestColors.gray400};
+  color: ${({ active }) => (active ? pinterestColors.white : pinterestColors.gray400)};
+  background-color: ${({ active }) => (active ? pinterestColors.primary : pinterestColors.gray200)};
 `;
 
 const StyledToolWrapper = styled.div`
@@ -133,5 +175,30 @@ const StyledToolWrapper = styled.div`
   }
   & > div:last-child {
     margin: 2.2rem 0 3.5rem 0;
+  }
+`;
+const StyledPinWrapper = styled.div`
+  display: flex;
+  gap: 11px;
+  width: 32.1rem;
+  max-height: 66.8rem;
+  overflow-y: scroll;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.2rem;
+    & > div {
+      width: 12.5rem;
+      &:not(:last-child) {
+        margin-bottom: 11px;
+      }
+      & > img {
+        display: block;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 1rem;
+      }
+    }
   }
 `;
