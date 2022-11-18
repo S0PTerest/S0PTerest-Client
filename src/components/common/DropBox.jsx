@@ -26,6 +26,7 @@ function DropBox(props) {
     </StyledRoot>
   );
 }
+
 export default DropBox;
 
 const StyledRoot = styled.div`
