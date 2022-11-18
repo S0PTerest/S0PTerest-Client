@@ -41,7 +41,7 @@ const StyledRoot = styled.div`
   align-items: center;
   width: 28.8rem;
   height: 50rem;
-  margin: 2.6rem 0 0 4.8rem;
+  margin: 2.6rem 5.6rem 0 4.8rem;
   padding: 3rem 0 3rem 0;
   border: 1px solid ${pinterestColors.gray200};
   border-radius: 1.4rem;

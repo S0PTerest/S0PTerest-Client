@@ -26,6 +26,14 @@ function PinList() {
           {openModal && <DropBox text={dropBoxData.text} options={dropBoxData.options} />}
         </div>
       </StyledHeader>
+      <StyledPinWrapper>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </StyledPinWrapper>
     </StyledRoot>
   );
 }
@@ -35,13 +43,13 @@ export default PinList;
 const StyledRoot = styled.div`
   width: 158.4rem;
   height: 96.3rem;
-  padding: 3rem;
+  /* padding: 3rem; */
 `;
 
 const StyledHeader = styled.div`
   display: flex;
   align-items: center;
-  margin: 2.2rem 0 0 6.6rem;
+  margin: 2.2rem 0 2.6rem 1rem;
   & > h1 {
     font-weight: 700;
     font-size: 2.4rem;
@@ -59,7 +67,8 @@ const StyledHeader = styled.div`
   & > div {
     display: flex;
     flex-direction: column;
-    /* align-items: flex-start; */
+    align-items: center;
+    justify-content: center;
     /* background-color: green; */
   }
 `;
@@ -71,5 +80,20 @@ const StyledSortingWrapper = styled.div`
     font-weight: 700;
     font-size: 1.6rem;
     margin-right: 0.8rem;
+  }
+`;
+
+const StyledPinWrapper = styled.div`
+  width: 155.4rem;
+  height: 84.2rem;
+  background-color: green;
+  display: flex;
+  flex-wrap: wrap;
+  & > div {
+    width: 230px;
+    height: 150px;
+    /* align-items: flex-start; */
+    background-color: red;
+    margin-right: 2rem;
   }
 `;
