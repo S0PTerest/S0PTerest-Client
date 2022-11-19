@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { default as icDrop } from '../../asset/icon_drop.svg';
 import DropBox from '../../components/common/DropBox';
+import BoardItem from '../common/BoardItem';
 
 const dropBoxData = { text: '정렬 기준', options: ['알파벳순', '사용자 지정', '마지막 저장일'] };
 
@@ -27,12 +28,30 @@ function PinList() {
         </div>
       </StyledHeader>
       <StyledPinWrapper>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        {/* <StyledFirstBoard>
+
+        </StyledFirstBoard> */}
+        <div>
+          <BoardItem text="profile" />
+        </div>
+        <div>
+          <BoardItem text="profile" />
+        </div>
+        <div>
+          <BoardItem text="profile" />
+        </div>
+        <div>
+          <BoardItem text="profile" />
+        </div>
+        <div>
+          <BoardItem text="profile" />
+        </div>
+        <div>
+          <BoardItem text="profile" />
+        </div>
+        <div>
+          <BoardItem text="profile" />
+        </div>
       </StyledPinWrapper>
     </StyledRoot>
   );
@@ -86,14 +105,14 @@ const StyledSortingWrapper = styled.div`
 const StyledPinWrapper = styled.div`
   width: 155.4rem;
   height: 84.2rem;
-  background-color: green;
   display: flex;
   flex-wrap: wrap;
+
   & > div {
-    width: 230px;
-    height: 150px;
-    /* align-items: flex-start; */
-    background-color: red;
+    display: flex;
+    flex-direction: column;
+    width: 23rem;
+    height: 15.4rem;
     margin-right: 2rem;
   }
 `;

@@ -66,7 +66,7 @@ function NoteList() {
               </StyledNoteInfo>
             </div>
 
-            {noteStatus[idx] === 'open' && <BoardItem />}
+            {noteStatus[idx] === 'open' && <BoardItem text="todo" />}
           </StyledNote>
         ))}
       </StyledNoteList>
