@@ -5,9 +5,56 @@ import Palette from '../components/todo/Palette';
 import { pinterestColors } from '../styles/color';
 import { ReactComponent as IcMenu } from '../assets/icMenu.svg';
 
+const getToday = () => {
+  const week = ['월', '화', '수', '목', '금', '토', '일'];
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const date = today.getDate();
+  const day = today.getDay();
+  return `${year}년 ${month}월 ${date}일 (${week[day - 1]})`;
+};
+
+const notes = [
+  {
+    title: '제목1',
+    date: '2022년 11월 14일 (월)',
+    todo: '할 일 2개',
+    pins: [{ uid: '', title: '핀 제목', creatorId: '', imageUrl: '' }],
+    contents: '콘텐츠1',
+  },
+  {
+    title: '제목2',
+    date: '2022년 11월 14일 (월)',
+    todo: '할 일 2개',
+    pins: [{ uid: '', title: '핀 제목', creatorId: '', imageUrl: '' }],
+    contents: '콘텐츠1',
+  },
+  {
+    title: '제목3',
+    date: '2022년 11월 14일 (월)',
+    todo: '할 일 2개',
+    pins: [{ uid: '', title: '핀 제목', creatorId: '', imageUrl: '' }],
+    contents: '콘텐츠1',
+  },
+  {
+    title: '제목4',
+    date: '2022년 11월 14일 (월)',
+    todo: '할 일 2개',
+    pins: [{ uid: '', title: '핀 제목', creatorId: '', imageUrl: '' }],
+    contents: '콘텐츠1',
+  },
+];
+
 function Todo() {
   const [noteTitle, setNoteTitle] = useState('');
   const [noteContent, setNoteContent] = useState('');
+  const [currentNoteIndex, setCurrentNoteIndex] = useState(null);
+
+  const handleNote = (idx) => {
+    setCurrentNoteIndex(idx);
+  };
+
   return (
     <StyledRoot>
       <StyledTitle>
@@ -17,19 +64,21 @@ function Todo() {
         </StyledIconWrapper>
       </StyledTitle>
       <StyledMain>
-        <NoteList />
+        <NoteList notes={notes} handleNote={(idx) => handleNote(idx)} />
         <StyledNote>
-          <StyledNoteDate>2022년 11월 17일 (목)</StyledNoteDate>
+          <StyledNoteDate>
+            {currentNoteIndex !== null ? notes[currentNoteIndex].date : getToday()}
+          </StyledNoteDate>
           <StyledNoteTitle
             type="text"
             placeholder="노트 제목 추가"
-            value={noteTitle}
+            value={currentNoteIndex !== null ? notes[currentNoteIndex].title : noteTitle}
             onChange={(e) => setNoteTitle(e.target.value)}
           />
           <StyledNoteContent
             type="text"
             placeholder="내용을 입력해보세요."
-            value={noteContent}
+            value={currentNoteIndex !== null ? notes[currentNoteIndex].contents : noteContent}
             onChange={(e) => setNoteContent(e.target.value)}
           />
         </StyledNote>
