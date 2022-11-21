@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { pinterestColors } from '../styles/color';
-import { ReactComponent as IPlus } from '../assets/iPlus.svg';
-import { ReactComponent as IOption } from '../assets/iOption.svg';
+import { pinterestColors } from '../../styles/color';
+import { ReactComponent as IPlus } from '../../assets/iPlus.svg';
+import { ReactComponent as IOption } from '../../assets/iOption.svg';
 import { Link } from 'react-router-dom';
-import DropBox from '../components/common/DropBox';
-
-const noteList = [
-  { title: '제목1', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
-  { title: '제목2', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
-  { title: '제목3', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
-  { title: '제목4', date: '2022년 11월 14일 (월)', todo: '할 일 2개' },
-];
+import DropBox from '../common/DropBox';
 
 const dropBoxData = { text: '노트 옵션', options: ['삭제', '수정'] };
 
-function NoteList() {
-  const [noteStatus, setNoteStatus] = useState(new Array(noteList.length).fill('close'));
-  const [dropBoxStatus, setDropBoxStatus] = useState(new Array(noteList.length).fill('close'));
+function NoteList(props) {
+  const { notes, handleNote } = props;
+  const [noteStatus, setNoteStatus] = useState(new Array(notes.length).fill('close'));
+  const [dropBoxStatus, setDropBoxStatus] = useState(new Array(notes.length).fill('close'));
 
   const toggleNoteStatus = (e, idx) => {
     if (e.target.closest('div').id === 'option') return;
@@ -29,7 +23,7 @@ function NoteList() {
   };
 
   const changeStatus = (idx, array, handler) => {
-    let newStatus = new Array(noteList.length).fill('close');
+    let newStatus = new Array(notes.length).fill('close');
     if (array.some((val) => val) && array.indexOf('open') === idx) {
       handler(newStatus);
       return;
@@ -38,21 +32,26 @@ function NoteList() {
     handler(newStatus);
   };
 
+  const openNote = (e, idx) => {
+    toggleNoteStatus(e, idx);
+    handleNote(idx);
+  };
+
   return (
     <StyledRoot>
-      <StyledCreateButton to="/todo">
+      <StyledCreateButton to="/todo" onClick={() => handleNote(null)}>
         <h1>노트 만들기</h1>
         <IPlus />
       </StyledCreateButton>
 
       <StyledNoteList>
-        {noteList.map(({ title, date, todo }, idx) => (
+        {notes.map(({ title, date, todo }, idx) => (
           <StyledNote key={title} isOpen={noteStatus[idx] === 'open'}>
             {dropBoxStatus[idx] === 'open' && (
               <DropBox text={dropBoxData.text} options={dropBoxData.options} />
             )}
 
-            <div onClick={(e) => toggleNoteStatus(e, idx)}>
+            <div onClick={(e) => openNote(e, idx)}>
               <StyledTitle>
                 <h1>{title}</h1>
                 <div id="option">
@@ -90,7 +89,7 @@ export default NoteList;
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30.3rem;
+  min-width: 30.3rem;
   margin: 0 2.1rem 0 0.5rem;
 `;
 
