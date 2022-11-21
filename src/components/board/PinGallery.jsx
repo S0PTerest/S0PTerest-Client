@@ -17,4 +17,5 @@ export default PinGallery;
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 39px;
 `;
