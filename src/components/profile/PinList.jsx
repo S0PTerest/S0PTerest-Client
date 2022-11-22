@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { default as icDrop } from '../../asset/icon_drop.svg';
 import DropBox from '../../components/common/DropBox';
+import { pinterestColors } from '../../styles/color';
 import BoardItem from '../common/BoardItem';
 
 const dropBoxData = { text: '정렬 기준', options: ['알파벳순', '사용자 지정', '마지막 저장일'] };
+
+const pinData = [1, 1, 1, 1, 1];
 
 function PinList() {
   const [openModal, setOpenModal] = useState(false);
@@ -28,9 +31,13 @@ function PinList() {
         </div>
       </StyledHeader>
       <StyledPinWrapper>
-        {/* <StyledFirstBoard>
+        <StyledFirstBoard>
+          {pinData.map((idx, index) => (
+            <StyledFirstPins key={idx} idx={index} />
 
-        </StyledFirstBoard> */}
+            // <div key={idx}>냐냐</div>
+          ))}
+        </StyledFirstBoard>
         <div>
           <BoardItem text="profile" />
         </div>
@@ -102,11 +109,68 @@ const StyledSortingWrapper = styled.div`
   }
 `;
 
+const StyledFirstBoard = styled.div`
+  width: 23rem;
+  height: 15.4rem;
+`;
+
+const StyledFirstPins = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 11.3rem;
+  flex: none;
+  height: 15.4rem;
+  /* left: -2rem; */
+  background-color: #d9d9d9;
+  z-index: 5;
+  ${({ idx }) =>
+    idx === 1 &&
+    css`
+      position: relative;
+      display: inline-block;
+      top: -15.4rem;
+      background-color: #c0c0c0;
+      left: 3rem;
+      z-index: 4;
+    `}
+  ${({ idx }) =>
+    idx === 2 &&
+    css`
+      position: relative;
+      display: block;
+      top: -30.8rem;
+      background-color: #adadad;
+      left: 6rem;
+      z-index: 3;
+    `}
+    ${({ idx }) =>
+    idx === 3 &&
+    css`
+      position: relative;
+      top: -46.2rem;
+      background-color: #898989;
+      left: 9rem;
+      z-index: 2;
+    `}
+    ${({ idx }) =>
+    idx === 4 &&
+    css`
+      position: relative;
+      top: -61.6rem;
+      background-color: #616161;
+      left: 12rem;
+      z-index: 1;
+    `}
+  /* background: #d9d9d9; */
+  border-radius: 14px;
+`;
+
 const StyledPinWrapper = styled.div`
   width: 155.4rem;
   height: 84.2rem;
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
 
   & > div {
     display: flex;
@@ -114,5 +178,6 @@ const StyledPinWrapper = styled.div`
     width: 23rem;
     height: 15.4rem;
     margin-right: 2rem;
+    margin-top: 6.4rem;
   }
 `;
