@@ -4,10 +4,11 @@ import { default as icDrop } from '../../asset/icon_drop.svg';
 import DropBox from '../../components/common/DropBox';
 import { pinterestColors } from '../../styles/color';
 import BoardItem from '../common/BoardItem';
+import { boardData, board1_pinData, board2_pinData } from './testData.js';
 
 const dropBoxData = { text: '정렬 기준', options: ['알파벳순', '사용자 지정', '마지막 저장일'] };
 
-const pinData = [1, 1, 1, 1, 1];
+const test = [1, 1, 1, 1, 1];
 
 function PinList() {
   const [openModal, setOpenModal] = useState(false);
@@ -31,34 +32,32 @@ function PinList() {
         </div>
       </StyledHeader>
       <StyledPinWrapper>
-        <StyledFirstBoard>
-          {pinData.map((idx, index) => (
-            <StyledFirstPins key={idx} idx={index} />
-
-            // <div key={idx}>냐냐</div>
-          ))}
-        </StyledFirstBoard>
-        <div>
-          <BoardItem text="profile" />
-        </div>
-        <div>
-          <BoardItem text="profile" />
-        </div>
-        <div>
-          <BoardItem text="profile" />
-        </div>
-        <div>
-          <BoardItem text="profile" />
-        </div>
-        <div>
-          <BoardItem text="profile" />
-        </div>
-        <div>
-          <BoardItem text="profile" />
-        </div>
-        <div>
-          <BoardItem text="profile" />
-        </div>
+        <StyledBoardWrapper>
+          <StyledFirstBoard>
+            {test.map((idx, index) => (
+              <StyledFirstPins key={index} idx={index} />
+            ))}
+          </StyledFirstBoard>
+          <StyledBoardTitle>
+            모든 핀
+            <p>
+              핀 n개 <span>n주</span>
+            </p>
+          </StyledBoardTitle>
+        </StyledBoardWrapper>
+        {boardData['board'].map((board, index) => (
+          <StyledBoardWrapper key={index}>
+            <div>
+              <BoardItem text="profile" />
+            </div>
+            <StyledBoardTitle>
+              {board.title}
+              <p>
+                핀 n개 <span>n주</span>
+              </p>
+            </StyledBoardTitle>
+          </StyledBoardWrapper>
+        ))}
       </StyledPinWrapper>
     </StyledRoot>
   );
@@ -69,7 +68,6 @@ export default PinList;
 const StyledRoot = styled.div`
   width: 158.4rem;
   height: 96.3rem;
-  /* padding: 3rem; */
 `;
 
 const StyledHeader = styled.div`
@@ -89,14 +87,6 @@ const StyledHeader = styled.div`
       padding-bottom: 0.5rem; // border가 없어서 center가 안 맞는 문제 해결
     }
   }
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    /* background-color: green; */
-  }
 `;
 
 const StyledSortingWrapper = styled.div`
@@ -115,30 +105,34 @@ const StyledFirstBoard = styled.div`
 `;
 
 const StyledFirstPins = styled.div`
-  position: relative;
-  display: inline-block;
   width: 11.3rem;
-  flex: none;
   height: 15.4rem;
-  /* left: -2rem; */
-  background-color: #d9d9d9;
-  z-index: 5;
+  ${({ idx }) =>
+    idx === 0 &&
+    css`
+      position: absolute;
+      display: inline-block;
+      top: 0;
+      left: 0rem;
+      background-color: #d9d9d9;
+      z-index: 5;
+    `}
   ${({ idx }) =>
     idx === 1 &&
     css`
-      position: relative;
+      position: absolute;
       display: inline-block;
-      top: -15.4rem;
-      background-color: #c0c0c0;
+      top: 0;
       left: 3rem;
+      background-color: #c0c0c0;
       z-index: 4;
     `}
   ${({ idx }) =>
     idx === 2 &&
     css`
-      position: relative;
-      display: block;
-      top: -30.8rem;
+      position: absolute;
+      display: inline-block;
+      top: 0;
       background-color: #adadad;
       left: 6rem;
       z-index: 3;
@@ -146,8 +140,9 @@ const StyledFirstPins = styled.div`
     ${({ idx }) =>
     idx === 3 &&
     css`
-      position: relative;
-      top: -46.2rem;
+      position: absolute;
+      display: inline-block;
+      top: 0rem;
       background-color: #898989;
       left: 9rem;
       z-index: 2;
@@ -155,14 +150,14 @@ const StyledFirstPins = styled.div`
     ${({ idx }) =>
     idx === 4 &&
     css`
-      position: relative;
-      top: -61.6rem;
+      position: absolute;
+      display: inline-block;
+      top: 0;
       background-color: #616161;
       left: 12rem;
       z-index: 1;
     `}
-  /* background: #d9d9d9; */
-  border-radius: 14px;
+  border-radius: 1.4rem;
 `;
 
 const StyledPinWrapper = styled.div`
@@ -171,13 +166,35 @@ const StyledPinWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
+`;
 
-  & > div {
-    display: flex;
-    flex-direction: column;
-    width: 23rem;
-    height: 15.4rem;
-    margin-right: 2rem;
-    margin-top: 6.4rem;
+const StyledBoardTitle = styled.div`
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 2.4rem;
+  color: ${pinterestColors.black};
+  margin-top: 1rem;
+
+  p {
+    font-weight: 500;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    margin: 0.5rem 0rem 6.4rem 0rem;
+
+    span {
+      margin-left: 1rem;
+      font-weight: 500;
+      font-size: 1.2rem;
+      line-height: 1.4rem;
+      color: ${pinterestColors.gray400};
+    }
   }
+`;
+
+const StyledBoardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 23rem;
+  margin-right: 2rem;
+  position: relative;
 `;
