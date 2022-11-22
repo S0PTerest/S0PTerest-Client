@@ -42,9 +42,9 @@ function Palette(props) {
   };
 
   const selectPin = (idx) => {
-    let newStatus = pinStatus;
+    let newStatus = [...pinStatus];
     newStatus[idx] = !newStatus[idx];
-    setPinStatus(pinStatus.map((status) => status));
+    setPinStatus(newStatus);
   };
 
   return (
