@@ -31,8 +31,6 @@ export default DropBox;
 
 const StyledRoot = styled.div`
   position: absolute;
-  /* top: 5.1rem;
-  right: -11rem; */
   display: flex;
   flex-direction: column;
   width: 18.1rem;

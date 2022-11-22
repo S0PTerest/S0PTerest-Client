@@ -1,13 +1,14 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { pinterestColors } from '../../styles/color';
 
 function BoardItem(props) {
-  const { text } = props;
+  const { status } = props;
 
   return (
-    <StyledBoardItemWrapper status={text}>
+    <StyledBoardItemWrapper status={status}>
       {Array.from({ length: 3 }, (_v, i) => i).map((idx) => (
-        <StyledBoardItem key={idx} idx={idx} status={text}>
+        <StyledBoardItem key={idx} idx={idx} status={status}>
           <div></div>
         </StyledBoardItem>
       ))}
@@ -43,7 +44,7 @@ const StyledBoardItem = styled.div`
     css`
       height: 18.8rem;
       grid-row: 1/3;
-      background-color: #d9d9d9;
+      background-color: ${pinterestColors.gray300};
     `}
 
   ${({ idx, status }) =>
@@ -52,7 +53,7 @@ const StyledBoardItem = styled.div`
     css`
       height: 15.4rem;
       grid-row: 1/3;
-      background-color: #d9d9d9;
+      background-color: ${pinterestColors.gray300};
     `}
 
   ${({ idx }) =>

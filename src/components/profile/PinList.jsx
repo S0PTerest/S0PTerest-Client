@@ -14,13 +14,12 @@ function PinList() {
   const [openModal, setOpenModal] = useState(false);
 
   const openSortingModal = () => {
-    let newModalState = !openModal;
-    setOpenModal(newModalState);
+    setOpenModal((prev) => !prev);
   };
 
   return (
     <StyledRoot>
-      <StyledHeader>
+      <StyledNavigation>
         <h1>저장한 핀</h1>
         <h1>생성한 핀</h1>
         <div>
@@ -30,7 +29,7 @@ function PinList() {
           </StyledSortingWrapper>
           {openModal && <DropBox text={dropBoxData.text} options={dropBoxData.options} />}
         </div>
-      </StyledHeader>
+      </StyledNavigation>
       <StyledPinWrapper>
         <StyledBoardWrapper>
           <StyledFirstBoard>
@@ -48,7 +47,7 @@ function PinList() {
         {boardData['board'].map((board, index) => (
           <StyledBoardWrapper key={index}>
             <div>
-              <BoardItem text="profile" />
+              <BoardItem status="profile" />
             </div>
             <StyledBoardTitle>
               {board.title}
@@ -70,7 +69,7 @@ const StyledRoot = styled.div`
   height: 96.3rem;
 `;
 
-const StyledHeader = styled.div`
+const StyledNavigation = styled.div`
   display: flex;
   align-items: center;
   margin: 2.2rem 0 2.6rem 1rem;
@@ -79,12 +78,11 @@ const StyledHeader = styled.div`
     font-size: 2.4rem;
 
     &:nth-child(1) {
-      border-bottom: 0.5rem solid black;
+      border-bottom: 0.5rem solid;
       margin-right: 3.3rem;
     }
     &:nth-child(2) {
       margin-right: 110rem; //피그마 기준 117.1이지만 유동적으로 수정
-      padding-bottom: 0.5rem; // border가 없어서 center가 안 맞는 문제 해결
     }
   }
 `;
@@ -107,12 +105,13 @@ const StyledFirstBoard = styled.div`
 const StyledFirstPins = styled.div`
   width: 11.3rem;
   height: 15.4rem;
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  border-radius: 1.4rem;
   ${({ idx }) =>
     idx === 0 &&
     css`
-      position: absolute;
-      display: inline-block;
-      top: 0;
       left: 0rem;
       background-color: #d9d9d9;
       z-index: 5;
@@ -120,9 +119,6 @@ const StyledFirstPins = styled.div`
   ${({ idx }) =>
     idx === 1 &&
     css`
-      position: absolute;
-      display: inline-block;
-      top: 0;
       left: 3rem;
       background-color: #c0c0c0;
       z-index: 4;
@@ -130,9 +126,6 @@ const StyledFirstPins = styled.div`
   ${({ idx }) =>
     idx === 2 &&
     css`
-      position: absolute;
-      display: inline-block;
-      top: 0;
       background-color: #adadad;
       left: 6rem;
       z-index: 3;
@@ -140,9 +133,6 @@ const StyledFirstPins = styled.div`
     ${({ idx }) =>
     idx === 3 &&
     css`
-      position: absolute;
-      display: inline-block;
-      top: 0rem;
       background-color: #898989;
       left: 9rem;
       z-index: 2;
@@ -150,14 +140,10 @@ const StyledFirstPins = styled.div`
     ${({ idx }) =>
     idx === 4 &&
     css`
-      position: absolute;
-      display: inline-block;
-      top: 0;
       background-color: #616161;
       left: 12rem;
       z-index: 1;
     `}
-  border-radius: 1.4rem;
 `;
 
 const StyledPinWrapper = styled.div`
