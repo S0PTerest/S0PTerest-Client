@@ -18,5 +18,4 @@ const StyledRoot = styled.div`
   width: 192rem;
   height: 96.3rem; //header height 117px 고려한 값
   display: flex;
-  /* background-color: #ff7070; */
 `;
