@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPluspin } from '../../assets/iPluspin.svg';
@@ -13,7 +13,6 @@ import { default as iBulletpoint } from '../../assets/iBulletpoint.svg';
 import { default as iNumberpoint } from '../../assets/iNumberpoint.svg';
 import { default as iCheckbox } from '../../assets/iCheckbox.svg';
 3;
-import { useStatus } from '../../utils/hooks/useStatus';
 
 const firstLineTools = [iBold, iItalic, iUnderline, iStrikethrough];
 const secondLineTools = [iBulletpoint, iNumberpoint, iCheckbox];
@@ -35,14 +34,16 @@ const pinList = [
 
 function Palette() {
   const [isSelected, setIsSelected] = useState('textstyle');
-  const [pinStatus, setPinStatus] = useStatus(Array(pinList.length).fill(false));
+  const [pinStatus, setPinStatus] = useState(Array(pinList.length).fill(false));
 
   const selectTool = (tool) => {
     setIsSelected(tool);
   };
 
   const selectPin = (idx) => {
-    setPinStatus(idx);
+    let newStatus = pinStatus;
+    newStatus[idx] = !newStatus[idx];
+    setPinStatus(pinStatus.map((status) => status));
   };
 
   return (
@@ -86,8 +87,8 @@ function Palette() {
             {pinList.map((pin, idx) => {
               if (idx < pinList.length / 2) {
                 return (
-                  <StyledPin key={idx}>
-                    <StyledImageWrapper onClick={() => selectPin(idx)}>
+                  <StyledPin key={idx} onClick={() => selectPin(idx)}>
+                    <StyledImageWrapper>
                       <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
                       <img src={pin} />
                       {pinStatus[idx] && <StyledIcCheck />}
@@ -101,8 +102,8 @@ function Palette() {
             {pinList.map((pin, idx) => {
               if (idx >= pinList.length / 2) {
                 return (
-                  <StyledPin key={idx}>
-                    <StyledImageWrapper onClick={() => selectPin(idx)}>
+                  <StyledPin key={idx} onClick={() => selectPin(idx)}>
+                    <StyledImageWrapper>
                       <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
                       <img src={pin} />
                       {pinStatus[idx] && <StyledIcCheck />}
