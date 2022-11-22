@@ -44,7 +44,6 @@ function Board() {
   return (
     <StyledRoot>
       <PinTitle />
-      <hr />
       <StyledMain>
         <NoteList notes={notes} handleNote={(idx) => handleNote(idx)} /> <PinGallery />
       </StyledMain>
@@ -54,13 +53,9 @@ function Board() {
 
 export default Board;
 
-const StyledRoot = styled.div`
-  hr {
-    margin-top: 2.8rem;
-    margin-bottom: 3.2rem;
-  }
-`;
+const StyledRoot = styled.div``;
 
 const StyledMain = styled.main`
   display: flex;
+  margin-top: 3.2rem;
 `;
