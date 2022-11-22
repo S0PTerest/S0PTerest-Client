@@ -1,35 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPlus } from '../../assets/iPlus.svg';
 import { ReactComponent as IOption } from '../../assets/iOption.svg';
 import { Link } from 'react-router-dom';
 import DropBox from '../common/DropBox';
+import { useStatus } from '../../utils/hooks/useStatus';
 
 const dropBoxData = { text: '노트 옵션', options: ['삭제', '수정'] };
 
 function NoteList(props) {
   const { notes, handleNote } = props;
-  const [noteStatus, setNoteStatus] = useState(new Array(notes.length).fill('close'));
-  const [dropBoxStatus, setDropBoxStatus] = useState(new Array(notes.length).fill('close'));
+  const [noteStatus, setNoteStatus] = useStatus(new Array(notes.length).fill(false));
+  const [dropBoxStatus, setDropBoxStatus] = useStatus(new Array(notes.length).fill(false));
 
   const toggleNoteStatus = (e, idx) => {
     if (e.target.closest('div').id === 'option') return;
-    changeStatus(idx, noteStatus, setNoteStatus);
+    setNoteStatus(idx);
   };
 
   const openOptionModal = (idx) => {
-    changeStatus(idx, dropBoxStatus, setDropBoxStatus);
-  };
-
-  const changeStatus = (idx, array, handler) => {
-    let newStatus = new Array(notes.length).fill('close');
-    if (array.some((val) => val) && array.indexOf('open') === idx) {
-      handler(newStatus);
-      return;
-    }
-    newStatus[idx] = newStatus[idx] === 'open' ? 'close' : 'open';
-    handler(newStatus);
+    setDropBoxStatus(idx);
   };
 
   const openNote = (e, idx) => {
@@ -46,8 +37,8 @@ function NoteList(props) {
 
       <StyledNoteList>
         {notes.map(({ title, date, todo }, idx) => (
-          <StyledNote key={title} isOpen={noteStatus[idx] === 'open'}>
-            {dropBoxStatus[idx] === 'open' && (
+          <StyledNote key={title} isOpen={noteStatus[idx]}>
+            {dropBoxStatus[idx] && (
               <DropBox text={dropBoxData.text} options={dropBoxData.options} />
             )}
 
@@ -64,7 +55,7 @@ function NoteList(props) {
               </StyledNoteInfo>
             </div>
 
-            {noteStatus[idx] === 'open' && <BoardItem />}
+            {noteStatus[idx] && <BoardItem />}
           </StyledNote>
         ))}
       </StyledNoteList>

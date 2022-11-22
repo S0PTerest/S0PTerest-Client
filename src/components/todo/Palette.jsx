@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPluspin } from '../../assets/iPluspin.svg';
 import { ReactComponent as ITextStyle } from '../../assets/iTextStyle.svg';
+import { ReactComponent as IcCheck } from '../../assets/icCheck.svg';
 
 import { default as iBold } from '../../assets/iBold.svg';
 import { default as iItalic } from '../../assets/iItalic.svg';
@@ -11,6 +12,8 @@ import { default as iStrikethrough } from '../../assets/iStrikethrough.svg';
 import { default as iBulletpoint } from '../../assets/iBulletpoint.svg';
 import { default as iNumberpoint } from '../../assets/iNumberpoint.svg';
 import { default as iCheckbox } from '../../assets/iCheckbox.svg';
+3;
+import { useStatus } from '../../utils/hooks/useStatus';
 
 const firstLineTools = [iBold, iItalic, iUnderline, iStrikethrough];
 const secondLineTools = [iBulletpoint, iNumberpoint, iCheckbox];
@@ -32,9 +35,14 @@ const pinList = [
 
 function Palette() {
   const [isSelected, setIsSelected] = useState('textstyle');
+  const [pinStatus, setPinStatus] = useStatus(Array(pinList.length).fill(false));
 
   const selectTool = (tool) => {
     setIsSelected(tool);
+  };
+
+  const selectPin = (idx) => {
+    setPinStatus(idx);
   };
 
   return (
@@ -78,9 +86,13 @@ function Palette() {
             {pinList.map((pin, idx) => {
               if (idx < pinList.length / 2) {
                 return (
-                  <div key={idx}>
-                    <img src={pin} />
-                  </div>
+                  <StyledPin key={idx}>
+                    <StyledImageWrapper onClick={() => selectPin(idx)}>
+                      <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
+                      <img src={pin} />
+                      {pinStatus[idx] && <StyledIcCheck />}
+                    </StyledImageWrapper>
+                  </StyledPin>
                 );
               }
             })}
@@ -89,9 +101,13 @@ function Palette() {
             {pinList.map((pin, idx) => {
               if (idx >= pinList.length / 2) {
                 return (
-                  <div key={idx}>
-                    <img src={pin} />
-                  </div>
+                  <StyledPin key={idx}>
+                    <StyledImageWrapper onClick={() => selectPin(idx)}>
+                      <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
+                      <img src={pin} />
+                      {pinStatus[idx] && <StyledIcCheck />}
+                    </StyledImageWrapper>
+                  </StyledPin>
                 );
               }
             })}
@@ -183,22 +199,40 @@ const StyledPinWrapper = styled.div`
   width: 32.1rem;
   max-height: 66.8rem;
   overflow-y: scroll;
+`;
 
-  & > div {
-    display: flex;
-    flex-direction: column;
-    margin-top: 2.2rem;
-    & > div {
-      width: 12.5rem;
-      &:not(:last-child) {
-        margin-bottom: 11px;
-      }
-      & > img {
-        display: block;
-        width: 100%;
-        object-fit: cover;
-        border-radius: 1rem;
-      }
-    }
+const StyledBackground = styled.div`
+  position: absolute;
+  top: 0;
+  width: 12.5rem;
+  height: 100%;
+  background-color: ${({ isSelected }) => isSelected && 'rgba(0,0,0,0.4)'};
+  border-radius: 1rem;
+`;
+
+const StyledPin = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.2rem;
+`;
+
+const StyledImageWrapper = styled.div`
+  position: relative;
+  width: 12.5rem;
+  &:not(:last-child) {
+    margin-bottom: 11px;
   }
+  & > img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+  }
+`;
+
+const StyledIcCheck = styled(IcCheck)`
+  position: absolute;
+  bottom: 1.2rem;
+  right: 1.2rem;
 `;
