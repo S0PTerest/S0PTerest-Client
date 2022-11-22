@@ -32,7 +32,8 @@ const pinList = [
   'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
 ];
 
-function Palette() {
+function Palette(props) {
+  const { isActive } = props;
   const [isSelected, setIsSelected] = useState('textstyle');
   const [pinStatus, setPinStatus] = useState(Array(pinList.length).fill(false));
 
@@ -61,7 +62,7 @@ function Palette() {
           </StyledTool>
         </div>
 
-        <StyledSaveButton active={isSelected === 'pluspin'}>저장</StyledSaveButton>
+        <StyledSaveButton active={isActive}>저장</StyledSaveButton>
       </StyledButtonWrapper>
 
       {isSelected === 'textstyle' ? (

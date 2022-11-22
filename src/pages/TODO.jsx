@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NoteList from '../components/todo/NoteList';
 import Palette from '../components/todo/Palette';
@@ -50,10 +50,16 @@ function Todo() {
   const [noteTitle, setNoteTitle] = useState('');
   const [noteContent, setNoteContent] = useState('');
   const [currentNoteIndex, setCurrentNoteIndex] = useState(null);
+  const [activeSaveButton, setActiveSaveButton] = useState(false);
 
   const handleNote = (idx) => {
     setCurrentNoteIndex(idx);
   };
+
+  useEffect(() => {
+    if (noteTitle.length > 50) setNoteTitle(noteTitle.slice(0, 50));
+    noteTitle && noteContent ? setActiveSaveButton(true) : setActiveSaveButton(false);
+  }, [noteTitle, noteContent]);
 
   return (
     <StyledRoot>
@@ -83,7 +89,7 @@ function Todo() {
           />
         </StyledNote>
 
-        <Palette />
+        <Palette isActive={activeSaveButton} />
       </StyledMain>
     </StyledRoot>
   );
