@@ -10,19 +10,19 @@ function PinGalleryTitle() {
         <div>아이디어 더보기</div>
       </StyledInfoPin>
       <StyledSortPin>
-        <util>보드 정리하기</util>
-        <util>
+        <div>보드 정리하기</div>
+        <div>
           모든 핀
           <span>
             <IDropdown />
           </span>
-        </util>
-        <util_end>
+        </div>
+        <div>
           기본
           <span>
             <IDropdown />
           </span>
-        </util_end>
+        </div>
       </StyledSortPin>
     </StyledRoot>
   );
@@ -60,14 +60,15 @@ const StyledSortPin = styled.div`
   float: right;
   font-size: 1.5rem;
   font-weight: 700;
-  util {
+
+  & > div:not(:last-child) {
     margin-right: 2.6rem;
     span {
       margin-left: 0.8rem;
     }
   }
-  util_end {
-    margin-right: 1rem; 
+  & > div:last-child {
+    margin-right: 1rem;
     span {
       width: 0.8rem;
       height: 0.4rem;

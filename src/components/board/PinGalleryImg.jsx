@@ -176,14 +176,14 @@ function PinGalleryImg() {
 
   return (
     <StyledRoot>
-      {galleryAgenda.map((galleryData, index) => {
+      {galleryAgenda.map(({ img, title, profile, userId }, index) => {
         return (
           <StyledGalleryImg>
-            <img class="galleryImg" src={galleryData.img} alt="갤러리 이미지" />
-            <StyledTitle>{galleryData.title}</StyledTitle>
+            <img src={img} alt="갤러리 이미지" />
+            <StyledTitle>{title}</StyledTitle>
             <StyledUser>
-              <img src={galleryData.profile} />
-              <span>{galleryData.userId}</span>
+              <img src={profile} alt="유저 이미지 " />
+              <span>{userId}</span>
             </StyledUser>
           </StyledGalleryImg>
         );
@@ -205,7 +205,7 @@ const StyledGalleryImg = styled.div`
   flex-direction: column;
   margin-bottom: 3.4em;
 
-  .galleryImg {
+  & > img {
     width: 28.8rem;
     border-radius: 1.6rem;
     cursor: pointer;
