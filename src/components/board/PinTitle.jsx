@@ -38,6 +38,7 @@ const StyledRoot = styled.div`
 const StyledTitle = styled.div`
   font-size: 3.4rem;
   font-weight: bold;
+  margin-left: 3rem;
 
   & > span:nth-child(2) {
     margin-left: 2.2rem;
