@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { default as icDrop } from '../../asset/icon_drop.svg';
+import { default as icDrop } from '../../assets/icon_drop.svg';
 import DropBox from '../../components/common/DropBox';
 import { pinterestColors } from '../../styles/color';
 import BoardItem from '../common/BoardItem';

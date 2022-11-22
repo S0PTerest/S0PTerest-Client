@@ -4,7 +4,7 @@ import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPlus } from '../../assets/iPlus.svg';
 import { ReactComponent as IOption } from '../../assets/iOption.svg';
 import { Link } from 'react-router-dom';
-import BoardItem from './common/BoardItem';
+import BoardItem from '../common/BoardItem';
 import DropBox from '../common/DropBox';
 
 const dropBoxData = { text: '노트 옵션', options: ['삭제', '수정'] };
