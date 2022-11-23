@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import NoteList from '../components/todo/NoteList';
 import Palette from '../components/todo/Palette';
 import { pinterestColors } from '../styles/color';
-import { ReactComponent as IcMenu } from '../assets/icMenu.svg';
+import PinTitle from '../components/board/PinTitle';
 
 const getToday = () => {
   const week = ['월', '화', '수', '목', '금', '토', '일'];
@@ -63,12 +63,7 @@ function Todo() {
 
   return (
     <StyledRoot>
-      <StyledTitle>
-        민본포_7조 제목이 길어진다면 (50자 제한이라고 함)
-        <StyledIconWrapper>
-          <IcMenu />
-        </StyledIconWrapper>
-      </StyledTitle>
+      <PinTitle />
       <StyledMain>
         <NoteList notes={notes} handleNote={(idx) => handleNote(idx)} />
         <StyledNote>

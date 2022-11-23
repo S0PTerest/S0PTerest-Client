@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
-import { ReactComponent as IPlus } from '../../assets/iPlus.svg';
 import { ReactComponent as IOption } from '../../assets/iOption.svg';
 import { Link } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
@@ -31,11 +30,6 @@ function NoteList(props) {
 
   return (
     <StyledRoot>
-      <StyledCreateButton to="/todo" onClick={() => handleNote(null)}>
-        <h1>노트 만들기</h1>
-        <IPlus />
-      </StyledCreateButton>
-
       <StyledNoteList>
         {notes.map(({ title, date, todo }, idx) => (
           <StyledNote key={title} isOpen={noteStatus[idx]}>
