@@ -19,9 +19,9 @@ function PinTitle() {
       </StyledTitle>
 
       <StyledActiveUser>
-        <ActiveUser1 class="activeUser1" />
-        <ActiveUser2 class="activeUser2" />
-        <ActiveUser3 class="activeUser3" />
+        <ActiveUser1 className="activeUser1" />
+        <ActiveUser2 className="activeUser2" />
+        <ActiveUser3 className="activeUser3" />
       </StyledActiveUser>
     </StyledRoot>
   );

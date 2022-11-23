@@ -4,24 +4,26 @@ import NoteList from '../components/todo/NoteList';
 import Palette from '../components/todo/Palette';
 import { pinterestColors } from '../styles/color';
 import PinTitle from '../components/board/PinTitle';
-import { getNotes } from '../services';
+import { getNotes, createNote } from '../services';
 
-const getToday = () => {
+const getToday = (type) => {
   const week = ['월', '화', '수', '목', '금', '토', '일'];
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth() + 1;
   const date = today.getDate();
   const day = today.getDay();
-  return `${year}년 ${month}월 ${date}일 (${week[day - 1]})`;
+  console.log(month);
+  if (type === 'withDay') return `${year}년 ${month}월 ${date}일 (${week[day - 1]})`;
+  return `${year}-${month}-${date}`;
 };
 
 const BOARD_ID = '2474a7ac-6b9f-47c9-b113-a3422d902cbe';
 
 function Todo() {
   const [notes, setNotes] = useState(null);
-  const [noteTitle, setNoteTitle] = useState('');
-  const [noteContent, setNoteContent] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [currentNoteIndex, setCurrentNoteIndex] = useState(null);
   const [activeSaveButton, setActiveSaveButton] = useState(false);
 
@@ -35,13 +37,13 @@ function Todo() {
   };
 
   const checkTitleMaxLength = () => {
-    if (noteTitle.length > 50) {
-      setNoteTitle(noteTitle.slice(0, 50));
+    if (title.length > 50) {
+      setTitle(title.slice(0, 50));
     }
   };
 
   const triggerSaveButton = () => {
-    if (noteTitle && noteContent) {
+    if (title && description) {
       return true;
     }
     return false;
@@ -49,12 +51,22 @@ function Todo() {
 
   const setNoteData = () => {
     if (!currentNoteIndex) {
-      setNoteTitle('');
-      setNoteContent('');
+      setTitle('');
+      setDescription('');
       return;
     }
-    setNoteTitle(notes[currentNoteIndex].title);
-    setNoteContent(notes[currentNoteIndex].description);
+    setTitle(notes[currentNoteIndex].title);
+    setDescription(notes[currentNoteIndex].description);
+  };
+
+  const onClickSaveButton = async (pinIds) => {
+    const body = {
+      title,
+      date: getToday(),
+      description,
+      pinIds,
+    };
+    const { data } = await createNote(BOARD_ID, body);
   };
 
   useEffect(() => {
@@ -64,7 +76,7 @@ function Todo() {
   useEffect(() => {
     checkTitleMaxLength();
     setActiveSaveButton(triggerSaveButton());
-  }, [noteTitle, noteContent]);
+  }, [title, description]);
 
   useEffect(() => {
     setNoteData();
@@ -79,23 +91,26 @@ function Todo() {
         <NoteList notes={notes} handleNote={(idx) => handleNote(idx)} />
         <StyledNote>
           <StyledNoteDate>
-            {currentNoteIndex ? notes[currentNoteIndex].date : getToday()}
+            {currentNoteIndex ? notes[currentNoteIndex].date : getToday('withDay')}
           </StyledNoteDate>
           <StyledNoteTitle
             type="text"
             placeholder="노트 제목 추가"
-            value={noteTitle}
-            onChange={(e) => setNoteTitle(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <StyledNoteContent
             type="text"
             placeholder="내용을 입력해보세요."
-            value={noteContent}
-            onChange={(e) => setNoteContent(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </StyledNote>
 
-        {/* <Palette pins={ notes[currentNoteIndex].pins} isActive={activeSaveButton} /> */}
+        <Palette
+          isActive={activeSaveButton}
+          onClickSaveButton={(pinIds) => onClickSaveButton([pinIds])}
+        />
       </StyledMain>
     </StyledRoot>
   );
