@@ -181,7 +181,7 @@ function PinGalleryImg() {
     <StyledRoot>
       {galleryAgenda.map(({ img, title, profile, userId }, index) => {
         return (
-          <StyledGalleryImg>
+          <StyledGalleryImg key={index}>
             <StyledDim>
               <div>
                 <span>
@@ -195,7 +195,7 @@ function PinGalleryImg() {
             <div className="dimMenu">
               <IMenu />
             </div>
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle key={title}>{title}</StyledTitle>
             <StyledUser>
               <img src={profile} alt="유저 이미지 " />
               <span>{userId}</span>
