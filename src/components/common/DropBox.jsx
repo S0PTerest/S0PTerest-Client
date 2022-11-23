@@ -1,12 +1,24 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 
 function DropBox(props) {
   const { text, options } = props;
 
+  const dropBoxStatus = {
+    '노트 옵션': css`
+      top: 5.1rem;
+      right: -11rem;
+    `,
+
+    '정렬 기준': css`
+      top: 8.5rem;
+      right: 5rem;
+    `,
+  };
+
   return (
-    <StyledRoot>
+    <StyledRoot status={dropBoxStatus[text]}>
       <StyledText>{text}</StyledText>
       {options.map((option) => (
         <StyledOption key={option}>{option}</StyledOption>
@@ -19,8 +31,6 @@ export default DropBox;
 
 const StyledRoot = styled.div`
   position: absolute;
-  top: 5.1rem;
-  right: -11rem;
   display: flex;
   flex-direction: column;
   width: 18.1rem;
@@ -29,20 +39,22 @@ const StyledRoot = styled.div`
   border-radius: 2rem;
   padding: 2.2rem 2.4rem;
   z-index: 9;
+  ${({ status }) => status};
 `;
 
 const StyledText = styled.h1`
   font-weight: 400;
   font-size: 1.4rem;
+  cursor: default;
   line-height: 1.7rem;
   color: ${pinterestColors.gray400};
   margin-bottom: 1.6rem;
 `;
-
 const StyledOption = styled.span`
   font-weight: 600;
   font-size: 1.6rem;
   line-height: 1.9rem;
+  cursor: pointer;
   color: ${pinterestColors.black};
   border-radius: 1.5rem;
   &:not(:last-child) {
