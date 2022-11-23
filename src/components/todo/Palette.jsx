@@ -17,25 +17,11 @@ import { default as iCheckbox } from '../../assets/iCheckbox.svg';
 const firstLineTools = [iBold, iItalic, iUnderline, iStrikethrough];
 const secondLineTools = [iBulletpoint, iNumberpoint, iCheckbox];
 
-const pinList = [
-  'https://images.unsplash.com/photo-1668396817444-402fec00939a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-  'https://images.unsplash.com/photo-1668457248686-cd6bc7ef1228?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-  'https://images.unsplash.com/photo-1668370477273-f18c110b2d46?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-  'https://images.unsplash.com/photo-1668584086743-ef5423409bc4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80',
-  'https://images.unsplash.com/photo-1665686376173-ada7a0031a85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-  'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
-];
-
 function Palette(props) {
-  const { isActive } = props;
+  const { pins, isActive } = props;
+  console.log('pins', pins);
   const [isSelected, setIsSelected] = useState('textstyle');
-  const [pinStatus, setPinStatus] = useState(Array(pinList.length).fill(false));
+  const [pinStatus, setPinStatus] = useState(Array(pins.length).fill(false));
 
   const selectTool = (tool) => {
     setIsSelected(tool);
@@ -85,13 +71,13 @@ function Palette(props) {
       ) : (
         <StyledPinWrapper>
           <div>
-            {pinList.map((pin, idx) => {
-              if (idx < pinList.length / 2) {
+            {pins.map(({ imageUrl, uid }, idx) => {
+              if (idx < pins.length / 2) {
                 return (
-                  <StyledPin key={idx} onClick={() => selectPin(idx)}>
+                  <StyledPin key={uid} onClick={() => selectPin(idx)}>
                     <StyledImageWrapper>
                       <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
-                      <img src={pin} />
+                      <img src={imageUrl} />
                       {pinStatus[idx] && <StyledIcCheck />}
                     </StyledImageWrapper>
                   </StyledPin>
@@ -100,13 +86,13 @@ function Palette(props) {
             })}
           </div>
           <div>
-            {pinList.map((pin, idx) => {
-              if (idx >= pinList.length / 2) {
+            {pins.map(({ imageUrl, uid }, idx) => {
+              if (idx >= pins.length / 2) {
                 return (
-                  <StyledPin key={idx} onClick={() => selectPin(idx)}>
+                  <StyledPin key={uid} onClick={() => selectPin(idx)}>
                     <StyledImageWrapper>
                       <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
-                      <img src={pin} />
+                      <img src={imageUrl} />
                       {pinStatus[idx] && <StyledIcCheck />}
                     </StyledImageWrapper>
                   </StyledPin>

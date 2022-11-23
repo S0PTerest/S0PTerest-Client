@@ -31,7 +31,7 @@ function NoteList(props) {
   return (
     <StyledRoot>
       <StyledNoteList>
-        {notes.map(({ title, date, todo }, idx) => (
+        {notes.map(({ title, date }, idx) => (
           <StyledNote key={title} isOpen={noteStatus[idx]}>
             {dropBoxStatus[idx] && (
               <DropBox text={dropBoxData.text} options={dropBoxData.options} />
@@ -45,9 +45,7 @@ function NoteList(props) {
                 </div>
               </StyledTitle>
 
-              <StyledNoteInfo>
-                {date} &#183; {todo}
-              </StyledNoteInfo>
+              <StyledNoteInfo>{date} &#183; 할 일 2개</StyledNoteInfo>
             </div>
 
             {noteStatus[idx] === 'open' && <BoardItem status="todo" />}
