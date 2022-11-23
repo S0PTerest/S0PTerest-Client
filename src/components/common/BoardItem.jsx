@@ -8,9 +8,7 @@ function BoardItem(props) {
   return (
     <StyledBoardItemWrapper status={status}>
       {Array.from({ length: 3 }, (_v, i) => i).map((idx) => (
-        <StyledBoardItem key={idx} idx={idx} status={status}>
-          <div></div>
-        </StyledBoardItem>
+        <StyledBoardItem key={idx} idx={idx} status={status}></StyledBoardItem>
       ))}
     </StyledBoardItemWrapper>
   );
