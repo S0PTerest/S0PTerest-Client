@@ -1,35 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPlus } from '../../assets/iPlus.svg';
 import { ReactComponent as IOption } from '../../assets/iOption.svg';
 import { Link } from 'react-router-dom';
+import BoardItem from '../common/BoardItem';
 import DropBox from '../common/DropBox';
+import { useStatus } from '../../utils/hooks/useStatus';
 
 const dropBoxData = { text: '노트 옵션', options: ['삭제', '수정'] };
 
 function NoteList(props) {
   const { notes, handleNote } = props;
-  const [noteStatus, setNoteStatus] = useState(new Array(notes.length).fill('close'));
-  const [dropBoxStatus, setDropBoxStatus] = useState(new Array(notes.length).fill('close'));
+  const [noteStatus, setNoteStatus] = useStatus(new Array(notes.length).fill(false));
+  const [dropBoxStatus, setDropBoxStatus] = useStatus(new Array(notes.length).fill(false));
 
   const toggleNoteStatus = (e, idx) => {
     if (e.target.closest('div').id === 'option') return;
-    changeStatus(idx, noteStatus, setNoteStatus);
+    setNoteStatus(idx);
   };
 
   const openOptionModal = (idx) => {
-    changeStatus(idx, dropBoxStatus, setDropBoxStatus);
-  };
-
-  const changeStatus = (idx, array, handler) => {
-    let newStatus = new Array(notes.length).fill('close');
-    if (array.some((val) => val) && array.indexOf('open') === idx) {
-      handler(newStatus);
-      return;
-    }
-    newStatus[idx] = newStatus[idx] === 'open' ? 'close' : 'open';
-    handler(newStatus);
+    setDropBoxStatus(idx);
   };
 
   const openNote = (e, idx) => {
@@ -46,8 +38,8 @@ function NoteList(props) {
 
       <StyledNoteList>
         {notes.map(({ title, date, todo }, idx) => (
-          <StyledNote key={title} isOpen={noteStatus[idx] === 'open'}>
-            {dropBoxStatus[idx] === 'open' && (
+          <StyledNote key={title} isOpen={noteStatus[idx]}>
+            {dropBoxStatus[idx] && (
               <DropBox text={dropBoxData.text} options={dropBoxData.options} />
             )}
 
@@ -64,23 +56,11 @@ function NoteList(props) {
               </StyledNoteInfo>
             </div>
 
-            {noteStatus[idx] === 'open' && <BoardItem />}
+            {noteStatus[idx] === 'open' && <BoardItem status="todo" />}
           </StyledNote>
         ))}
       </StyledNoteList>
     </StyledRoot>
-  );
-}
-
-function BoardItem() {
-  return (
-    <StyledBoardItemWrapper>
-      {Array.from({ length: 3 }, (_v, i) => i).map((idx) => (
-        <StyledBoardItem key={idx} idx={idx}>
-          <div></div>
-        </StyledBoardItem>
-      ))}
-    </StyledBoardItemWrapper>
   );
 }
 
@@ -154,31 +134,4 @@ const StyledNoteInfo = styled.div`
   font-size: 1.4rem;
   line-height: 1.7rem;
   color: ${pinterestColors.gray400};
-`;
-
-const StyledBoardItemWrapper = styled.article`
-  display: grid;
-  grid-template-columns: 16.8rem;
-  grid-template-rows: 9.5rem 9.3rem;
-  border-radius: 1rem;
-  overflow: hidden;
-  margin-top: 2.2rem;
-`;
-
-const StyledBoardItem = styled.div`
-  height: 18.8rem;
-  background-color: #d9d9d9;
-
-  ${({ idx }) =>
-    idx === 1 &&
-    css`
-      grid-column: 2/3;
-      background-color: #a9a9a9;
-    `}
-  ${({ idx }) =>
-    idx === 2 &&
-    css`
-      grid-column: 2/3;
-      background-color: #c0c0c0;
-    `}
 `;

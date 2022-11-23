@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPluspin } from '../../assets/iPluspin.svg';
 import { ReactComponent as ITextStyle } from '../../assets/iTextStyle.svg';
+import { ReactComponent as IcCheck } from '../../assets/icCheck.svg';
 
 import { default as iBold } from '../../assets/iBold.svg';
 import { default as iItalic } from '../../assets/iItalic.svg';
@@ -11,6 +12,7 @@ import { default as iStrikethrough } from '../../assets/iStrikethrough.svg';
 import { default as iBulletpoint } from '../../assets/iBulletpoint.svg';
 import { default as iNumberpoint } from '../../assets/iNumberpoint.svg';
 import { default as iCheckbox } from '../../assets/iCheckbox.svg';
+3;
 
 const firstLineTools = [iBold, iItalic, iUnderline, iStrikethrough];
 const secondLineTools = [iBulletpoint, iNumberpoint, iCheckbox];
@@ -30,11 +32,19 @@ const pinList = [
   'https://images.unsplash.com/photo-1668571350460-3b7bf36b87e5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
 ];
 
-function Palette() {
+function Palette(props) {
+  const { isActive } = props;
   const [isSelected, setIsSelected] = useState('textstyle');
+  const [pinStatus, setPinStatus] = useState(Array(pinList.length).fill(false));
 
   const selectTool = (tool) => {
     setIsSelected(tool);
+  };
+
+  const selectPin = (idx) => {
+    let newStatus = [...pinStatus];
+    newStatus[idx] = !newStatus[idx];
+    setPinStatus(newStatus);
   };
 
   return (
@@ -52,7 +62,7 @@ function Palette() {
           </StyledTool>
         </div>
 
-        <StyledSaveButton active={isSelected === 'pluspin'}>저장</StyledSaveButton>
+        <StyledSaveButton active={isActive}>저장</StyledSaveButton>
       </StyledButtonWrapper>
 
       {isSelected === 'textstyle' ? (
@@ -78,9 +88,13 @@ function Palette() {
             {pinList.map((pin, idx) => {
               if (idx < pinList.length / 2) {
                 return (
-                  <div key={idx}>
-                    <img src={pin} />
-                  </div>
+                  <StyledPin key={idx} onClick={() => selectPin(idx)}>
+                    <StyledImageWrapper>
+                      <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
+                      <img src={pin} />
+                      {pinStatus[idx] && <StyledIcCheck />}
+                    </StyledImageWrapper>
+                  </StyledPin>
                 );
               }
             })}
@@ -89,9 +103,13 @@ function Palette() {
             {pinList.map((pin, idx) => {
               if (idx >= pinList.length / 2) {
                 return (
-                  <div key={idx}>
-                    <img src={pin} />
-                  </div>
+                  <StyledPin key={idx} onClick={() => selectPin(idx)}>
+                    <StyledImageWrapper>
+                      <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
+                      <img src={pin} />
+                      {pinStatus[idx] && <StyledIcCheck />}
+                    </StyledImageWrapper>
+                  </StyledPin>
                 );
               }
             })}
@@ -183,22 +201,40 @@ const StyledPinWrapper = styled.div`
   width: 32.1rem;
   max-height: 66.8rem;
   overflow-y: scroll;
+`;
 
-  & > div {
-    display: flex;
-    flex-direction: column;
-    margin-top: 2.2rem;
-    & > div {
-      width: 12.5rem;
-      &:not(:last-child) {
-        margin-bottom: 11px;
-      }
-      & > img {
-        display: block;
-        width: 100%;
-        object-fit: cover;
-        border-radius: 1rem;
-      }
-    }
+const StyledBackground = styled.div`
+  position: absolute;
+  top: 0;
+  width: 12.5rem;
+  height: 100%;
+  background-color: ${({ isSelected }) => isSelected && 'rgba(0,0,0,0.4)'};
+  border-radius: 1rem;
+`;
+
+const StyledPin = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.2rem;
+`;
+
+const StyledImageWrapper = styled.div`
+  position: relative;
+  width: 12.5rem;
+  &:not(:last-child) {
+    margin-bottom: 11px;
   }
+  & > img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 1rem;
+  }
+`;
+
+const StyledIcCheck = styled(IcCheck)`
+  position: absolute;
+  bottom: 1.2rem;
+  right: 1.2rem;
 `;
