@@ -4,7 +4,7 @@ import NoteList from '../components/todo/NoteList';
 import Palette from '../components/todo/Palette';
 import { pinterestColors } from '../styles/color';
 import PinTitle from '../components/board/PinTitle';
-import { getNotes, createNote } from '../services';
+import { getNotes, createNote, updateNote } from '../services';
 
 const getToday = (type) => {
   const week = ['월', '화', '수', '목', '금', '토', '일'];
@@ -13,7 +13,6 @@ const getToday = (type) => {
   const month = today.getMonth() + 1;
   const date = today.getDate();
   const day = today.getDay();
-  console.log(month);
   if (type === 'withDay') return `${year}년 ${month}월 ${date}일 (${week[day - 1]})`;
   return `${year}-${month}-${date}`;
 };
@@ -64,9 +63,13 @@ function Todo() {
       title,
       date: getToday(),
       description,
-      pinIds,
+      pinIds: [],
     };
-    const { data } = await createNote(BOARD_ID, body);
+    if (!currentNoteIndex) {
+      await createNote(BOARD_ID, body);
+    } else {
+      await updateNote(BOARD_ID, notes[currentNoteIndex].uid, body);
+    }
   };
 
   useEffect(() => {
