@@ -16,6 +16,8 @@ const getToday = () => {
   return `${year}년 ${month}월 ${date}일 (${week[day - 1]})`;
 };
 
+const BOARD_ID = '2474a7ac-6b9f-47c9-b113-a3422d902cbe';
+
 function Todo() {
   const [notes, setNotes] = useState(null);
   const [noteTitle, setNoteTitle] = useState('');
@@ -28,8 +30,31 @@ function Todo() {
   };
 
   const fetchNotes = async () => {
-    const { data } = await getNotes('2474a7ac-6b9f-47c9-b113-a3422d902cbe');
+    const { data } = await getNotes(BOARD_ID);
     setNotes(data.notes);
+  };
+
+  const checkTitleMaxLength = () => {
+    if (noteTitle.length > 50) {
+      setNoteTitle(noteTitle.slice(0, 50));
+    }
+  };
+
+  const triggerSaveButton = () => {
+    if (noteTitle && noteContent) {
+      return true;
+    }
+    return false;
+  };
+
+  const setNoteData = () => {
+    if (!currentNoteIndex) {
+      setNoteTitle('');
+      setNoteContent('');
+      return;
+    }
+    setNoteTitle(notes[currentNoteIndex].title);
+    setNoteContent(notes[currentNoteIndex].description);
   };
 
   useEffect(() => {
@@ -37,13 +62,15 @@ function Todo() {
   }, []);
 
   useEffect(() => {
-    if (noteTitle.length > 50) setNoteTitle(noteTitle.slice(0, 50));
-    noteTitle && noteContent ? setActiveSaveButton(true) : setActiveSaveButton(false);
+    checkTitleMaxLength();
+    setActiveSaveButton(triggerSaveButton());
   }, [noteTitle, noteContent]);
 
-  if (!notes) return;
+  useEffect(() => {
+    setNoteData();
+  }, [currentNoteIndex]);
 
-  console.log('notes', notes);
+  if (!notes) return;
 
   return (
     <StyledRoot>
@@ -52,18 +79,18 @@ function Todo() {
         <NoteList notes={notes} handleNote={(idx) => handleNote(idx)} />
         <StyledNote>
           <StyledNoteDate>
-            {currentNoteIndex !== null ? notes[currentNoteIndex].date : getToday()}
+            {currentNoteIndex ? notes[currentNoteIndex].date : getToday()}
           </StyledNoteDate>
           <StyledNoteTitle
             type="text"
             placeholder="노트 제목 추가"
-            value={currentNoteIndex !== null ? notes[currentNoteIndex].title : noteTitle}
+            value={noteTitle}
             onChange={(e) => setNoteTitle(e.target.value)}
           />
           <StyledNoteContent
             type="text"
             placeholder="내용을 입력해보세요."
-            value={currentNoteIndex !== null ? notes[currentNoteIndex].description : noteContent}
+            value={noteContent}
             onChange={(e) => setNoteContent(e.target.value)}
           />
         </StyledNote>
