@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { default as icEdit } from '../../assets/icon_edit.svg';
 import { default as icShare } from '../../assets/icon_share.svg';
+import { getUser } from '../../services';
 
 function Account() {
+  const [user, setUser] = useState(null);
+
+  const getUserData = async () => {
+    const { data } = await getUser();
+    setUser(data['user']);
+  };
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
     <StyledRoot>
       <StyledImageWrapper>
-        {/* <StyledImage /> => 이미지가 있는 경우에 로드할 컴포넌트 */}
-        <h1>K</h1>
+        {user?.profileImageUrl ? (
+          <StyledImage src={user.profileImageUrl} />
+        ) : (
+          <h1>{user?.name[0]}</h1>
+        )}
       </StyledImageWrapper>
-      <StyledName>Kim Name</StyledName>
-      <p>pdadf@gmail.com</p>
+      <StyledName>{user?.name}</StyledName>
+      <p>{user?.email}</p>
       <StyledIconWrapper>
         <StyledIconBg>
           <img src={icEdit} />
@@ -23,11 +37,11 @@ function Account() {
       </StyledIconWrapper>
       <StyledDesc>
         <p>팔로워</p>
-        <p>1</p>
+        <p>{user?.follower}</p>
       </StyledDesc>
       <StyledDesc>
         <p>팔로잉</p>
-        <p>1</p>
+        <p>{user?.following}</p>
       </StyledDesc>
     </StyledRoot>
   );
