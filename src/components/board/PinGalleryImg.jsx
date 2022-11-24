@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { ReactComponent as IMenu } from '../../assets/iMenu.svg';
 import { ReactComponent as IDimMenu } from '../../assets/iDimMenu.svg';
 import { pinterestColors } from '../../styles/color';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { getUserPins } from '../../services';
 
 function PinGalleryImg() {
   const [pin, setPin] = useState(null);
   const [isHovering, setIsHovering] = useState(0);
-  
-  
+
+  const { uid } = useParams();
   const getPinData = async () => {
-    const { data } = await getUserPins('2474a7ac-6b9f-47c9-b113-a3422d902cbe');
+    const { data } = await getUserPins(uid);
     setPin(data['pin']);
   };
   useEffect(() => {
@@ -25,23 +26,32 @@ function PinGalleryImg() {
       {pin.map(({ imageUrl, title, creator }, index) => {
         return (
           <StyledGalleryImg key={index}>
-           {isHovering ? ( 
-           <StyledDim>
-              <div>
-                <span>
-                  <h1>모든 핀</h1>
-                  <IDimMenu />
-                </span>
-                <span>저장</span>
+            {isHovering ? (
+              <StyledDim>
+                <div>
+                  <span>
+                    <h1>모든 핀</h1>
+                    <IDimMenu />
+                  </span>
+                  <span>저장</span>
+                </div>
+              </StyledDim>
+            ) : (
+              ''
+            )}
+            <img
+              src={imageUrl}
+              alt="갤러리 이미지"
+              onMouseOver={() => setIsHovering(1)}
+              onMouseOut={() => setIsHovering(0)}
+            />
+            {isHovering ? (
+              <div className="dimMenu">
+                <IMenu />
               </div>
-            </StyledDim>) : ( ""
-           )}
-            <img src={imageUrl} alt="갤러리 이미지" onMouseOver={() => setIsHovering(1)} onMouseOut={() => setIsHovering(0)}/>
-            {isHovering ? ( 
-            <div className="dimMenu">
-              <IMenu />
-            </div>) : ( ""
-           )}
+            ) : (
+              ''
+            )}
             <StyledTitle>{title}</StyledTitle>
             <StyledUser>
               <img src={creator.profileImageUrl} alt="유저 이미지 " />
@@ -122,7 +132,6 @@ const StyledDim = styled.div`
   line-height: 22px;
   align-items: center;
   z-index: 1;
-  
 
   & > div:nth-child(1) {
     display: flex;
