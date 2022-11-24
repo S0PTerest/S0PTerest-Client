@@ -42,8 +42,10 @@ function PinList() {
       <StyledPinWrapper>
         <StyledBoardWrapper>
           <StyledFirstBoard>
-            {test.map((idx, index) => (
-              <StyledFirstPins key={index} idx={index} />
+            {boards[0]?.pins.slice(0, 5).map((item, index) => (
+              <StyledFirstPins key={index} idx={index}>
+                <img src={item.imageUrl}></img>
+              </StyledFirstPins>
             ))}
           </StyledFirstBoard>
           <StyledBoardTitle>
@@ -126,6 +128,7 @@ const StyledFirstPins = styled.div`
   position: absolute;
   display: inline-block;
   top: 0;
+  overflow: hidden;
   border-radius: 1.4rem;
   ${({ idx }) =>
     idx === 0 &&
@@ -162,6 +165,11 @@ const StyledFirstPins = styled.div`
       left: 12rem;
       z-index: 1;
     `}
+    img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const StyledPinWrapper = styled.div`
