@@ -68,8 +68,8 @@ function Todo() {
       await createNote(BOARD_ID, body);
     } else {
       await updateNote(BOARD_ID, notes[currentNoteIndex].uid, body);
-      fetchNotes();
     }
+    fetchNotes();
   };
 
   useEffect(() => {
