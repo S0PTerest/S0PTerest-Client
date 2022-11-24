@@ -128,6 +128,7 @@ const StyledRoot = styled.div`
 
 const StyledMain = styled.main`
   display: flex;
+  margin-top: 3.2rem;
 `;
 
 const StyledNote = styled.article`
