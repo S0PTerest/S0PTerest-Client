@@ -29,3 +29,8 @@ export const getBoards = async () => {
   const { data } = await api.get({ url: '/boards' });
   return { data };
 };
+
+export const getUserPins = async (boardId) => {
+  const { data } = await api.get({ url: `/boards/${boardId}/pins` });
+  return { data };
+};
