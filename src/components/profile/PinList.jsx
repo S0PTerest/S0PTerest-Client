@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { default as icDrop } from '../../assets/icon_drop.svg';
 import DropBox from '../../components/common/DropBox';
 import { pinterestColors } from '../../styles/color';
 import BoardItem from '../common/BoardItem';
-import { boardData, board1_pinData, board2_pinData } from './testData.js';
+import { getBoards } from '../../services';
 
 const dropBoxData = { text: '정렬 기준', options: ['알파벳순', '사용자 지정', '마지막 저장일'] };
 
-const test = [1, 1, 1, 1, 1];
-
 function PinList() {
+  const navigate = useNavigate();
+  const [boards, setBoards] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+
+  const getBoardData = async () => {
+    const { data } = await getBoards();
+    setBoards(data['board']);
+  };
+  useEffect(() => {
+    getBoardData();
+  }, []);
 
   const openSortingModal = () => {
     setOpenModal((prev) => !prev);
@@ -22,37 +31,40 @@ function PinList() {
       <StyledNavigation>
         <h1>저장한 핀</h1>
         <h1>생성한 핀</h1>
-        <div>
+        <StyledSortWrapper>
           <StyledSortingWrapper onClick={openSortingModal}>
             <p>알파벳 순</p>
             <img src={icDrop}></img>
           </StyledSortingWrapper>
           {openModal && <DropBox text={dropBoxData.text} options={dropBoxData.options} />}
-        </div>
+        </StyledSortWrapper>
       </StyledNavigation>
       <StyledPinWrapper>
         <StyledBoardWrapper>
           <StyledFirstBoard>
-            {test.map((idx, index) => (
-              <StyledFirstPins key={index} idx={index} />
-            ))}
+            {boards !== null &&
+              boards[0].pins.slice(0, 5).map((item, index) => (
+                <StyledFirstPins key={index} idx={index}>
+                  <img src={item.imageUrl}></img>
+                </StyledFirstPins>
+              ))}
           </StyledFirstBoard>
           <StyledBoardTitle>
             모든 핀
             <p>
-              핀 n개 <span>n주</span>
+              핀 22개 <span>1주</span>
             </p>
           </StyledBoardTitle>
         </StyledBoardWrapper>
-        {boardData['board'].map((board, index) => (
+        {boards?.map((board, index) => (
           <StyledBoardWrapper key={index}>
-            <div>
-              <BoardItem status="profile" />
+            <div onClick={() => navigate(`/board/${board.uid}`)}>
+              <BoardItem status="profile" pins={board.pins} />
             </div>
             <StyledBoardTitle>
               {board.title}
               <p>
-                핀 n개 <span>n주</span>
+                핀 {board.pins?.length}개 <span>2주</span>
               </p>
             </StyledBoardTitle>
           </StyledBoardWrapper>
@@ -72,19 +84,28 @@ const StyledRoot = styled.div`
 const StyledNavigation = styled.div`
   display: flex;
   align-items: center;
-  margin: 2.2rem 0 2.6rem 1rem;
+  margin: 2.2rem 0rem 2.6rem 1rem;
   & > h1 {
     font-weight: 700;
     font-size: 2.4rem;
+    margin-right: 0rem;
 
     &:nth-child(1) {
       border-bottom: 0.5rem solid;
-      margin-right: 3.3rem;
+      margin-right: 5rem;
     }
     &:nth-child(2) {
       margin-right: 110rem; //피그마 기준 117.1이지만 유동적으로 수정
+      padding-bottom: 0.5rem;
     }
   }
+`;
+
+const StyledSortWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-left: 6rem;
 `;
 
 const StyledSortingWrapper = styled.div`
@@ -108,6 +129,7 @@ const StyledFirstPins = styled.div`
   position: absolute;
   display: inline-block;
   top: 0;
+  overflow: hidden;
   border-radius: 1.4rem;
   ${({ idx }) =>
     idx === 0 &&
@@ -144,6 +166,11 @@ const StyledFirstPins = styled.div`
       left: 12rem;
       z-index: 1;
     `}
+    img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const StyledPinWrapper = styled.div`
@@ -183,4 +210,7 @@ const StyledBoardWrapper = styled.div`
   width: 23rem;
   margin-right: 2rem;
   position: relative;
+  div:first-child {
+    cursor: pointer;
+  }
 `;
