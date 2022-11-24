@@ -64,7 +64,7 @@ function NoteList(props) {
               <StyledNoteInfo>{date} &#183; 할 일 2개</StyledNoteInfo>
             </div>
 
-            {noteStatus[idx] === 'open' && <BoardItem status="todo" />}
+            {noteStatus[idx] && <BoardItem pins={notes[idx].pins} status="todo" />}
           </StyledNote>
         ))}
       </StyledNoteList>
