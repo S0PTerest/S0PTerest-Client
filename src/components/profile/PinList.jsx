@@ -76,13 +76,15 @@ const StyledNavigation = styled.div`
   & > h1 {
     font-weight: 700;
     font-size: 2.4rem;
+    margin-right: 0rem;
 
     &:nth-child(1) {
       border-bottom: 0.5rem solid;
-      margin-right: 11rem;
+      margin-right: 5rem;
     }
     &:nth-child(2) {
       margin-right: 110rem; //피그마 기준 117.1이지만 유동적으로 수정
+      padding-bottom: 0.5rem;
     }
   }
 `;
@@ -91,6 +93,7 @@ const StyledSortWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-left: 6rem;
 `;
 
 const StyledSortingWrapper = styled.div`
