@@ -7,6 +7,11 @@ export const getPins = async () => {
   return { data };
 };
 
+export const getUserPins = async (boardId) => {
+  const { data } = await api.get({ url: `/boards/${boardId}/pins` });
+  return { data };
+};
+
 export const getUser = async () => {
   const { data } = await api.get({ url: `/user/${USER_ID}` });
   return { data };
