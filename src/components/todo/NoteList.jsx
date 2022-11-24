@@ -77,8 +77,17 @@ export default NoteList;
 const StyledRoot = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 30.3rem;
-  margin: 0 2.1rem 0 0.5rem;
+  min-width: 33rem;
+  margin-left: 0.5rem;
+  overflow-y: scroll;
+  padding-right: 2.1rem;
+  ::-webkit-scrollbar {
+    width: 0.8rem;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: ${pinterestColors.gray300};
+    border-radius: 1.8rem;
+  }
 `;
 
 const StyledCreateButton = styled(Link)`
@@ -102,6 +111,7 @@ const StyledCreateButton = styled(Link)`
 const StyledNoteList = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100vh;
 `;
 
 const StyledNote = styled.div`
