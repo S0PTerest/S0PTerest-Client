@@ -63,7 +63,7 @@ function Todo() {
       title,
       date: getToday(),
       description,
-      pinIds: [],
+      pinIds: !pinIds.length ? [] : pinIds,
     };
     if (!currentNoteIndex) {
       await createNote(BOARD_ID, body);
