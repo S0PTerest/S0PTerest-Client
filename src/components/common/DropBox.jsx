@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 
 function DropBox(props) {
-  const { text, options } = props;
+  const { text, options, onClick } = props;
 
   const dropBoxStatus = {
     '노트 옵션': css`
@@ -12,8 +12,8 @@ function DropBox(props) {
     `,
 
     '정렬 기준': css`
-      top: 8.5rem;
-      right: 5rem;
+      top: 4rem;
+      right: -2rem;
     `,
   };
 
@@ -21,7 +21,9 @@ function DropBox(props) {
     <StyledRoot status={dropBoxStatus[text]}>
       <StyledText>{text}</StyledText>
       {options.map((option) => (
-        <StyledOption key={option}>{option}</StyledOption>
+        <StyledOption key={option} onClick={() => onClick(option)}>
+          {option}
+        </StyledOption>
       ))}
     </StyledRoot>
   );

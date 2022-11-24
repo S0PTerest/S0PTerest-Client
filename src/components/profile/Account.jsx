@@ -90,7 +90,7 @@ const StyledImage = styled.img`
 `;
 
 const StyledName = styled.h1`
-  margin-top: 3.3rem;
+  margin: 3.3rem 0rem 0.2rem 0rem;
   font-size: 3.4rem;
   font-weight: 700;
   line-height: 100%;
@@ -115,9 +115,16 @@ const StyledIconBg = styled.div`
 const StyledDesc = styled.div`
   display: flex;
   gap: 8.3rem;
+  width: 15rem;
+  height: 2.4rem;
+  margin-bottom: 1rem;
   p {
     font-size: 2rem;
     font-weight: 300;
     color: ${pinterestColors.black};
+  }
+  p:nth-child(2) {
+    width: 1.5rem;
+    text-align: center;
   }
 `;

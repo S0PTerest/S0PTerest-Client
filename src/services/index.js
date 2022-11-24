@@ -7,12 +7,32 @@ export const getPins = async () => {
   return { data };
 };
 
-export const getUserPins = async (boardId) => {
-  const { data } = await api.get({ url: `/boards/${boardId}/pins` });
+export const getNotes = async (boardId) => {
+  const { data } = await api.get({ url: `/boards/${boardId}/notes` });
   return { data };
 };
 
 export const getUser = async () => {
   const { data } = await api.get({ url: `/user/${USER_ID}` });
+  return { data };
+};
+
+export const createNote = async (boardId, body) => {
+  const { data } = await api.post({ url: `/boards/${boardId}/notes`, data: body });
+  return { data };
+};
+
+export const updateNote = async (boardId, noteId, body) => {
+  const { data } = await api.put({ url: `/boards/${boardId}/notes/${noteId}`, data: body });
+  return { data };
+};
+
+export const getBoards = async () => {
+  const { data } = await api.get({ url: '/boards' });
+  return { data };
+};
+
+export const getUserPins = async (boardId) => {
+  const { data } = await api.get({ url: `/boards/${boardId}/pins` });
   return { data };
 };
