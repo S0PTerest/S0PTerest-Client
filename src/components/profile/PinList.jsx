@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { default as icDrop } from '../../assets/icon_drop.svg';
 import DropBox from '../../components/common/DropBox';
 import { pinterestColors } from '../../styles/color';
 import BoardItem from '../common/BoardItem';
-import { boardData, board1_pinData, board2_pinData } from './testData.js';
 import { getBoards } from '../../services';
 
 const dropBoxData = { text: '정렬 기준', options: ['알파벳순', '사용자 지정', '마지막 저장일'] };
-const test = [1, 1, 1, 1, 1];
 
 function PinList() {
+  const navigate = useNavigate();
   const [boards, setBoards] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
@@ -42,28 +42,29 @@ function PinList() {
       <StyledPinWrapper>
         <StyledBoardWrapper>
           <StyledFirstBoard>
-            {boards[0]?.pins.slice(0, 5).map((item, index) => (
-              <StyledFirstPins key={index} idx={index}>
-                <img src={item.imageUrl}></img>
-              </StyledFirstPins>
-            ))}
+            {boards !== null &&
+              boards[0].pins.slice(0, 5).map((item, index) => (
+                <StyledFirstPins key={index} idx={index}>
+                  <img src={item.imageUrl}></img>
+                </StyledFirstPins>
+              ))}
           </StyledFirstBoard>
           <StyledBoardTitle>
             모든 핀
             <p>
-              핀 n개 <span>n주</span>
+              핀 22개 <span>1주</span>
             </p>
           </StyledBoardTitle>
         </StyledBoardWrapper>
         {boards?.map((board, index) => (
           <StyledBoardWrapper key={index}>
-            <div>
+            <div onClick={() => navigate(`/board/${board.uid}`)}>
               <BoardItem status="profile" pins={board.pins} />
             </div>
             <StyledBoardTitle>
               {board.title}
               <p>
-                핀 {board.pins?.length}개 <span>n주</span>
+                핀 {board.pins?.length}개 <span>2주</span>
               </p>
             </StyledBoardTitle>
           </StyledBoardWrapper>
@@ -209,4 +210,7 @@ const StyledBoardWrapper = styled.div`
   width: 23rem;
   margin-right: 2rem;
   position: relative;
+  div:first-child {
+    cursor: pointer;
+  }
 `;
