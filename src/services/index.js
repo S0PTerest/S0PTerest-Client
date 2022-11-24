@@ -11,3 +11,8 @@ export const getUser = async () => {
   const { data } = await api.get({ url: `/user/${USER_ID}` });
   return { data };
 };
+
+export const getBoards = async () => {
+  const { data } = await api.get({ url: `/boards` });
+  return { data };
+};

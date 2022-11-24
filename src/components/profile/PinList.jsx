@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { default as icDrop } from '../../assets/icon_drop.svg';
 import DropBox from '../../components/common/DropBox';
 import { pinterestColors } from '../../styles/color';
 import BoardItem from '../common/BoardItem';
 import { boardData, board1_pinData, board2_pinData } from './testData.js';
+import { getBoards } from '../../services';
 
 const dropBoxData = { text: '정렬 기준', options: ['알파벳순', '사용자 지정', '마지막 저장일'] };
-
 const test = [1, 1, 1, 1, 1];
 
 function PinList() {
+  const [boards, setBoards] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+
+  const getBoardData = async () => {
+    const { data } = await getBoards();
+    setBoards(data['board']);
+  };
+  useEffect(() => {
+    getBoardData();
+  }, []);
 
   const openSortingModal = () => {
     setOpenModal((prev) => !prev);
