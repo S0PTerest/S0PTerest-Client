@@ -82,7 +82,7 @@ const StyledRoot = styled(Link)`
   padding-right: 2.1rem;
 `;
 
-const StyledCreateButton = styled(Link)`
+const StyledCreateButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
