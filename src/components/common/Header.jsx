@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import IconLogo from '../../assets/icon_logo.svg';
 import IconArrowUp from '../../assets/icon_arrow_up.svg';
@@ -9,16 +9,29 @@ import IconUserLogo from '../../assets/icon_user_logo.svg';
 import IconMessageBtn from '../../assets/icon_message.svg';
 import { pinterestColors } from '../../styles/color';
 import DropBox from './DropBox';
-const CONSTANT = {
-  title: '추천옵션',
-  make: '만들기',
-  options: ['핀', '아이디어핀', '보드'],
+import { getUser } from '../../services';
+const DROPBOXALLRECOMMEND = {
+  title: '추천 옵션',
+  options: ['보드이름', '보드이름2', '보드이름3'],
+};
+
+const DROPBOXMAKE = {
+  title: '만들기',
+  options: ['핀', '아이디어 핀', '보드'],
 };
 function Header() {
-  const options = ['보드이름', '보드이름1', '보드이름2'];
-  const [isRecommendOpen, setIsRecommendOpen] = React.useState(false);
-  const [searchText, setSearchText] = React.useState('');
-  const [isAddOpen, setIsAddOpen] = React.useState(false);
+  const [isRecommendOpen, setIsRecommendOpen] = useState(false);
+  const [isMakeOpen, setIsMakeOpen] = useState(false);
+  const [searchText, setSearchText] = useState('');
+
+  const [user, setUser] = useState(null);
+  const getUserData = async () => {
+    const { data } = await getUser();
+    setUser(data['user']);
+  };
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <StyledHeaderWrapper>
@@ -34,7 +47,7 @@ function Header() {
         <span>모든추천</span>
         <StyledArrow src={isRecommendOpen ? IconArrowUp : IconArrowDown} />
         {isRecommendOpen && (
-          <DropBox text={CONSTANT.title} options={options} top={6.5} right={-3} />
+          <DropBox text={DROPBOXALLRECOMMEND.title} options={DROPBOXALLRECOMMEND.options} />
         )}
       </StyledRecommendButton>
       <StyledSearchBar
@@ -47,14 +60,12 @@ function Header() {
       <StyledIconWrapper>
         <StyledIconAdd
           onClick={() => {
-            setIsAddOpen((prevState) => !prevState);
-            console.log(isAddOpen);
+            setIsMakeOpen((prevState) => !prevState);
+            console.log(setIsMakeOpen);
           }}
         >
           <img src={IconAddBtn} alt="AddButton" />
-          {isAddOpen && (
-            <DropBox text={CONSTANT.make} options={CONSTANT.options} top={8} right={11} />
-          )}
+          {isMakeOpen && <DropBox text={DROPBOXMAKE.title} options={DROPBOXMAKE.options} />}
         </StyledIconAdd>
         <StyledIconNotice>
           <img src={IconNoticeBtn} alt="Notice" />
@@ -62,9 +73,7 @@ function Header() {
         <StyledIconMessage>
           <img src={IconMessageBtn} alt="Message" />
         </StyledIconMessage>
-        <StyledIconUserLogo>
-          <img src={IconUserLogo} alt="IconUser" />
-        </StyledIconUserLogo>
+        <StyledIconUserLogo src={user?.profileImageUrl} alt="IconUser" />
       </StyledIconWrapper>
     </StyledHeaderWrapper>
   );
@@ -77,6 +86,7 @@ const StyledHeaderWrapper = styled.div`
   align-items: center;
   height: 11.7rem;
   border: 1px solid red;
+  width: 189.6rem;
 `;
 
 const StyledLogoWrapper = styled.div`
@@ -87,7 +97,7 @@ const StyledLogoWrapper = styled.div`
 
 const StyledRecommendButton = styled.button`
   border: none;
-  position: relative;
+  /* position: relative; */
   height: 5.5rem;
   width: 15.2rem;
   border-radius: 3rem;
@@ -95,6 +105,7 @@ const StyledRecommendButton = styled.button`
   color: ${pinterestColors.white};
   font-size: 1.8rem;
   margin-left: 2.9rem;
+  cursor: pointer;
 `;
 
 const StyledSearchBar = styled.input`
@@ -119,6 +130,12 @@ const StyledIconWrapper = styled.div`
 `;
 
 const StyledIconNotice = styled.div``;
-const StyledIconUserLogo = styled.div``;
-const StyledIconAdd = styled.div``;
+const StyledIconUserLogo = styled.img`
+  height: 2.8rem;
+  width: 2.8rem;
+  border-radius: 50%;
+`;
+const StyledIconAdd = styled.div`
+  cursor: pointer;
+`;
 const StyledIconMessage = styled.div``;
