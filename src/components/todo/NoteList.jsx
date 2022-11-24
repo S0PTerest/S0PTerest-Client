@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPlus } from '../../assets/iPlus.svg';
