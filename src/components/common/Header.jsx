@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import IconLogo from '../../assets/icon_logo.svg';
 import IconArrowUp from '../../assets/icon_arrow_up.svg';
 import IconArrowDown from '../../assets/icon_arrow_down.svg';
 import IconAddBtn from '../../assets/icon_add_btn.svg';
 import IconNoticeBtn from '../../assets/icon_notice_btn.svg';
-import IconUserLogo from '../../assets/icon_user_logo.svg';
 import IconMessageBtn from '../../assets/icon_message.svg';
 import { pinterestColors } from '../../styles/color';
 import DropBox from './DropBox';
@@ -69,7 +69,9 @@ function Header() {
         <StyledIconMessage>
           <img src={IconMessageBtn} alt="Message" />
         </StyledIconMessage>
-        <StyledIconUserLogo src={user?.profileImageUrl} alt="IconUser" />
+        <Link to="/profile">
+          <StyledIconUserLogo src={user?.profileImageUrl} alt="IconUser" />
+        </Link>
       </StyledIconWrapper>
     </StyledHeaderWrapper>
   );
@@ -81,7 +83,6 @@ const StyledHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 11.7rem;
-  border: 1px solid red;
   width: 189.6rem;
 `;
 

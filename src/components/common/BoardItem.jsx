@@ -12,7 +12,6 @@ function BoardItem(props) {
         : pins.slice(0, 3)
       ).map(({ imageUrl }, idx) => (
         <StyledBoardItem key={idx} idx={idx} status={status}>
-          {/* {imageUrl ? <img src={imageUrl} /> : <div></div>} */}
           {imageUrl ? <img src={imageUrl} /> : <div></div>}
         </StyledBoardItem>
       ))}
