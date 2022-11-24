@@ -41,12 +41,14 @@ const StyledInfoPin = styled.div`
   display: flex;
 
   h1 {
+    height: 2.9rem;
     font-size: 2.4rem;
     font-weight: 700;
     line-height: 2.88rem;
   }
 
   div {
+    height: 1.8rem;
     font-size: 1.5rem;
     font-weight: 400;
     line-height: 1.8rem;
@@ -56,23 +58,25 @@ const StyledInfoPin = styled.div`
 `;
 
 const StyledSortPin = styled.div`
+  height: 1.8rem;
   display: flex;
   float: right;
   font-size: 1.5rem;
   font-weight: 700;
 
+  span {
+    width: 0.8rem;
+    height: 0.4rem;
+    margin-left: 0.8rem;
+    line-height: 2rem;
+    display: inline-block;
+    vertical-align: top;
+  }
+
   & > div:not(:last-child) {
     margin-right: 2.6rem;
-    span {
-      margin-left: 0.8rem;
-    }
   }
   & > div:last-child {
     margin-right: 1rem;
-    span {
-      width: 0.8rem;
-      height: 0.4rem;
-      margin-left: 0.8rem;
-    }
   }
 `;

@@ -19,9 +19,9 @@ function PinTitle() {
       </StyledTitle>
 
       <StyledActiveUser>
-        <ActiveUser1 class="activeUser1" />
-        <ActiveUser2 class="activeUser2" />
-        <ActiveUser3 class="activeUser3" />
+        <ActiveUser1 className="activeUser1" />
+        <ActiveUser2 className="activeUser2" />
+        <ActiveUser3 className="activeUser3" />
       </StyledActiveUser>
     </StyledRoot>
   );
@@ -30,9 +30,12 @@ function PinTitle() {
 export default PinTitle;
 
 const StyledRoot = styled.div`
+  height: 7.4rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #e6e6e6; ;
 `;
 
 const StyledTitle = styled.div`
