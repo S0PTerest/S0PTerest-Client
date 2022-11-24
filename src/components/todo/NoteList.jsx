@@ -7,11 +7,13 @@ import { Link } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
 import DropBox from '../common/DropBox';
 import { useStatus } from '../../utils/hooks/useStatus';
+import { useParams } from 'react-router-dom';
 
 const dropBoxData = { text: '노트 옵션', options: ['삭제', '수정'] };
 
 function NoteList(props) {
   const { notes, handleNote } = props;
+  const { uid } = useParams();
   const [noteStatus, setNoteStatus] = useStatus(new Array(notes.length).fill(false));
   const [dropBoxStatus, setDropBoxStatus] = useStatus(new Array(notes.length).fill(false));
 
@@ -36,7 +38,7 @@ function NoteList(props) {
   };
 
   return (
-    <StyledRoot to="/todo">
+    <StyledRoot to={`/todo/${uid}`}>
       <StyledCreateButton onClick={() => handleNote(null)}>
         <h1>노트 만들기</h1>
         <IPlus />
@@ -103,7 +105,7 @@ const StyledCreateButton = styled.div`
 const StyledNoteList = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
 `;
 
 const StyledNote = styled.div`

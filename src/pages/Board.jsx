@@ -1,51 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PinTitle from '../components/board/PinTitle';
 import PinGallery from '../components/board/PinGallery';
 import NoteList from '../components/todo/NoteList';
-
-const notes = [
-  {
-    title: '제목1',
-    date: '2022년 11월 14일 (월)',
-    todo: '할 일 2개',
-    pins: [{ uid: '', title: '핀 제목', creatorId: '', imageUrl: '' }],
-    contents: '콘텐츠1',
-  },
-  {
-    title: '제목2',
-    date: '2022년 11월 14일 (월)',
-    todo: '할 일 2개',
-    pins: [{ uid: '', title: '핀 제목', creatorId: '', imageUrl: '' }],
-    contents: '콘텐츠1',
-  },
-  {
-    title: '제목3',
-    date: '2022년 11월 14일 (월)',
-    todo: '할 일 2개',
-    pins: [{ uid: '', title: '핀 제목', creatorId: '', imageUrl: '' }],
-    contents: '콘텐츠1',
-  },
-  {
-    title: '제목4',
-    date: '2022년 11월 14일 (월)',
-    todo: '할 일 2개',
-    pins: [{ uid: '', title: '핀 제목', creatorId: '', imageUrl: '' }],
-    contents: '콘텐츠1',
-  },
-];
+import { getNotes } from '../services';
 
 function Board() {
+  const { uid } = useParams();
+  const [notes, setNotes] = useState();
   const [currentNoteIndex, setCurrentNoteIndex] = useState(null);
 
   const handleNote = (idx) => {
     setCurrentNoteIndex(idx);
   };
+
+  const fetchNotes = async () => {
+    const { data } = await getNotes(uid);
+    setNotes(data.notes);
+  };
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
+
+  if (!notes) return;
+
   return (
     <StyledRoot>
       <PinTitle />
       <StyledMain>
-        <NoteList notes={notes} handleNote={(idx) => handleNote(idx)} /> <PinGallery />
+        <NoteList notes={notes} handleNote={(idx) => handleNote(idx)} />
+        <PinGallery />
       </StyledMain>
     </StyledRoot>
   );

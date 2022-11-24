@@ -5,6 +5,7 @@ import Palette from '../components/todo/Palette';
 import { pinterestColors } from '../styles/color';
 import PinTitle from '../components/board/PinTitle';
 import { getNotes, createNote, updateNote } from '../services';
+import { useParams } from 'react-router-dom';
 
 const getToday = (type) => {
   const week = ['월', '화', '수', '목', '금', '토', '일'];
@@ -17,9 +18,8 @@ const getToday = (type) => {
   return `${year}-${month}-${date}`;
 };
 
-const BOARD_ID = '2474a7ac-6b9f-47c9-b113-a3422d902cbe';
-
 function Todo() {
+  const { uid } = useParams();
   const [notes, setNotes] = useState(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -31,9 +31,10 @@ function Todo() {
   };
 
   const fetchNotes = async () => {
-    const { data } = await getNotes(BOARD_ID);
+    const { data } = await getNotes(uid);
     setNotes(data.notes);
   };
+
   const checkTitleMaxLength = () => {
     if (title.length > 50) {
       setTitle(title.slice(0, 50));
