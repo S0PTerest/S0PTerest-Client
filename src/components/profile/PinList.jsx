@@ -56,12 +56,12 @@ function PinList() {
         {boards?.map((board, index) => (
           <StyledBoardWrapper key={index}>
             <div>
-              <BoardItem status="profile" images={board.pins} />
+              <BoardItem status="profile" pins={board.pins} />
             </div>
             <StyledBoardTitle>
               {board.title}
               <p>
-                핀 {board.pins.length}개 <span>n주</span>
+                핀 {board.pins?.length}개 <span>n주</span>
               </p>
             </StyledBoardTitle>
           </StyledBoardWrapper>
