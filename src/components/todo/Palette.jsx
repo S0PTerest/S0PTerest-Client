@@ -17,7 +17,7 @@ import { default as iCheckbox } from '../../assets/iCheckbox.svg';
 const firstLineTools = [iBold, iItalic, iUnderline, iStrikethrough];
 const secondLineTools = [iBulletpoint, iNumberpoint, iCheckbox];
 
-const pinList = [
+const pins = [
   'https://images.unsplash.com/photo-1668396817444-402fec00939a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
   'https://images.unsplash.com/photo-1668457248686-cd6bc7ef1228?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
   'https://images.unsplash.com/photo-1668370477273-f18c110b2d46?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
@@ -33,9 +33,9 @@ const pinList = [
 ];
 
 function Palette(props) {
-  const { isActive } = props;
+  const { isActive, onClickSaveButton } = props;
   const [isSelected, setIsSelected] = useState('textstyle');
-  const [pinStatus, setPinStatus] = useState(Array(pinList.length).fill(false));
+  const [pinStatus, setPinStatus] = useState(Array(pins.length).fill(false));
 
   const selectTool = (tool) => {
     setIsSelected(tool);
@@ -62,7 +62,13 @@ function Palette(props) {
           </StyledTool>
         </div>
 
-        <StyledSaveButton active={isActive}>저장</StyledSaveButton>
+        <StyledSaveButton
+          active={isActive}
+          disabled={!isActive}
+          onClick={() => onClickSaveButton('4c67926c-2927-4c38-b670-af43498e1772')}
+        >
+          저장
+        </StyledSaveButton>
       </StyledButtonWrapper>
 
       {isSelected === 'textstyle' ? (
@@ -85,8 +91,8 @@ function Palette(props) {
       ) : (
         <StyledPinWrapper>
           <div>
-            {pinList.map((pin, idx) => {
-              if (idx < pinList.length / 2) {
+            {pins.map((pin, idx) => {
+              if (idx < pins.length / 2) {
                 return (
                   <StyledPin key={idx} onClick={() => selectPin(idx)}>
                     <StyledImageWrapper>
@@ -100,8 +106,8 @@ function Palette(props) {
             })}
           </div>
           <div>
-            {pinList.map((pin, idx) => {
-              if (idx >= pinList.length / 2) {
+            {pins.map((pin, idx) => {
+              if (idx >= pins.length / 2) {
                 return (
                   <StyledPin key={idx} onClick={() => selectPin(idx)}>
                     <StyledImageWrapper>
@@ -177,6 +183,7 @@ const StyledSaveButton = styled.button`
   line-height: 2.2rem;
   color: ${({ active }) => (active ? pinterestColors.white : pinterestColors.gray400)};
   background-color: ${({ active }) => (active ? pinterestColors.primary : pinterestColors.gray200)};
+  cursor: pointer;
 `;
 
 const StyledToolWrapper = styled.div`
@@ -222,6 +229,7 @@ const StyledPin = styled.div`
 const StyledImageWrapper = styled.div`
   position: relative;
   width: 12.5rem;
+  cursor: pointer;
   &:not(:last-child) {
     margin-bottom: 11px;
   }

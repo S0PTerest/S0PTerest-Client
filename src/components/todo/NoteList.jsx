@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPlus } from '../../assets/iPlus.svg';
@@ -29,6 +29,12 @@ function NoteList(props) {
     handleNote(idx);
   };
 
+  const onClickDropBoxUpdateOption = (option) => {
+    if (option === '수정') {
+      setDropBoxStatus(null);
+    }
+  };
+
   return (
     <StyledRoot>
       <StyledCreateButton to="/todo" onClick={() => handleNote(null)}>
@@ -37,10 +43,14 @@ function NoteList(props) {
       </StyledCreateButton>
 
       <StyledNoteList>
-        {notes.map(({ title, date, todo }, idx) => (
-          <StyledNote key={title} isOpen={noteStatus[idx]}>
+        {notes.map(({ title, date, uid }, idx) => (
+          <StyledNote key={uid} isOpen={noteStatus[idx]}>
             {dropBoxStatus[idx] && (
-              <DropBox text={dropBoxData.text} options={dropBoxData.options} />
+              <DropBox
+                text={dropBoxData.text}
+                options={dropBoxData.options}
+                onClick={(option) => onClickDropBoxUpdateOption(option)}
+              />
             )}
 
             <div onClick={(e) => openNote(e, idx)}>
@@ -51,12 +61,10 @@ function NoteList(props) {
                 </div>
               </StyledTitle>
 
-              <StyledNoteInfo>
-                {date} &#183; {todo}
-              </StyledNoteInfo>
+              <StyledNoteInfo>{date} &#183; 할 일 2개</StyledNoteInfo>
             </div>
 
-            {noteStatus[idx] === 'open' && <BoardItem status="todo" />}
+            {noteStatus[idx] && <BoardItem pins={notes[idx].pins} status="todo" />}
           </StyledNote>
         ))}
       </StyledNoteList>
