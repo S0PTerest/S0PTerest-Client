@@ -7,13 +7,15 @@ function BoardItem(props) {
 
   return (
     <StyledBoardItemWrapper status={status}>
-      {(pins.length < 3 ? [...pins, ...Array(3 - pins.length).fill({ imageUrl: null })] : pins).map(
-        ({ imageUrl }, idx) => (
-          <StyledBoardItem key={idx} idx={idx} status={status}>
-            {imageUrl ? <img src={imageUrl} /> : <div></div>}
-          </StyledBoardItem>
-        ),
-      )}
+      {(pins.length < 3
+        ? [...pins, ...Array(3 - pins.length).fill({ imageUrl: null })]
+        : pins.slice(0, 3)
+      ).map(({ imageUrl }, idx) => (
+        <StyledBoardItem key={idx} idx={idx} status={status}>
+          {/* {imageUrl ? <img src={imageUrl} /> : <div></div>} */}
+          {imageUrl ? <img src={imageUrl} /> : <div></div>}
+        </StyledBoardItem>
+      ))}
     </StyledBoardItemWrapper>
   );
 }
@@ -34,6 +36,7 @@ const StyledBoardItemWrapper = styled.article`
     css`
       grid-template-columns: 15.4rem;
       grid-template-rows: 7.7rem;
+      max-height: 15.4rem;
     `}
   border-radius: 1rem;
   overflow: hidden;
@@ -74,7 +77,7 @@ const StyledBoardItem = styled.div`
     `}
     & > img {
     width: 100%;
-    /* height: 100%; */
+    height: 100%;
     object-fit: cover;
   }
 `;

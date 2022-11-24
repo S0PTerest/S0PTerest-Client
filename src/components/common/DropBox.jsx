@@ -12,8 +12,8 @@ function DropBox(props) {
     `,
 
     '정렬 기준': css`
-      top: 8.5rem;
-      right: 5rem;
+      top: 4rem;
+      right: -2rem;
     `,
   };
 
