@@ -22,13 +22,13 @@ function PinList() {
       <StyledNavigation>
         <h1>저장한 핀</h1>
         <h1>생성한 핀</h1>
-        <div>
+        <StyledSortWrapper>
           <StyledSortingWrapper onClick={openSortingModal}>
             <p>알파벳 순</p>
             <img src={icDrop}></img>
           </StyledSortingWrapper>
           {openModal && <DropBox text={dropBoxData.text} options={dropBoxData.options} />}
-        </div>
+        </StyledSortWrapper>
       </StyledNavigation>
       <StyledPinWrapper>
         <StyledBoardWrapper>
@@ -72,19 +72,25 @@ const StyledRoot = styled.div`
 const StyledNavigation = styled.div`
   display: flex;
   align-items: center;
-  margin: 2.2rem 0 2.6rem 1rem;
+  margin: 2.2rem 0rem 2.6rem 1rem;
   & > h1 {
     font-weight: 700;
     font-size: 2.4rem;
 
     &:nth-child(1) {
       border-bottom: 0.5rem solid;
-      margin-right: 3.3rem;
+      margin-right: 11rem;
     }
     &:nth-child(2) {
       margin-right: 110rem; //피그마 기준 117.1이지만 유동적으로 수정
     }
   }
+`;
+
+const StyledSortWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
 `;
 
 const StyledSortingWrapper = styled.div`
