@@ -3,13 +3,17 @@ import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 
 function BoardItem(props) {
-  const { status } = props;
+  const { pins, status } = props;
 
   return (
     <StyledBoardItemWrapper status={status}>
-      {Array.from({ length: 3 }, (_v, i) => i).map((idx) => (
-        <StyledBoardItem key={idx} idx={idx} status={status}></StyledBoardItem>
-      ))}
+      {(pins.length < 3 ? [...pins, ...Array(3 - pins.length).fill({ imageUrl: null })] : pins).map(
+        ({ imageUrl }, idx) => (
+          <StyledBoardItem key={idx} idx={idx} status={status}>
+            {imageUrl ? <img src={imageUrl} /> : <div></div>}
+          </StyledBoardItem>
+        ),
+      )}
     </StyledBoardItemWrapper>
   );
 }
@@ -36,6 +40,8 @@ const StyledBoardItemWrapper = styled.article`
 `;
 
 const StyledBoardItem = styled.div`
+  overflow: hidden;
+
   ${({ idx, status }) =>
     idx === 0 &&
     status == 'todo' &&
@@ -44,7 +50,6 @@ const StyledBoardItem = styled.div`
       grid-row: 1/3;
       background-color: ${pinterestColors.gray300};
     `}
-
   ${({ idx, status }) =>
     idx === 0 &&
     status == 'profile' &&
@@ -53,19 +58,23 @@ const StyledBoardItem = styled.div`
       grid-row: 1/3;
       background-color: ${pinterestColors.gray300};
     `}
-
-  ${({ idx }) =>
+    ${({ idx }) =>
     idx === 1 &&
     css`
       grid-column: 2/3;
       grid-row: 1/2;
       background-color: #a9a9a9;
     `}
-  ${({ idx }) =>
+    ${({ idx }) =>
     idx === 2 &&
     css`
       grid-column: 2/3;
       grid-row: 2/3;
       background-color: #c0c0c0;
     `}
+    & > img {
+    width: 100%;
+    /* height: 100%; */
+    object-fit: cover;
+  }
 `;
