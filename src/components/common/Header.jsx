@@ -10,12 +10,12 @@ import IconMessageBtn from '../../assets/icon_message.svg';
 import { pinterestColors } from '../../styles/color';
 import DropBox from './DropBox';
 import { getUser } from '../../services';
-const DROPBOXALLRECOMMEND = {
+const DROPBOX_ALLRECOMMEND = {
   title: '추천 옵션',
   options: ['보드이름', '보드이름2', '보드이름3'],
 };
 
-const DROPBOXMAKE = {
+const DROPBOX_MAKE = {
   title: '만들기',
   options: ['핀', '아이디어 핀', '보드'],
 };
@@ -41,35 +41,31 @@ function Header() {
       <StyledRecommendButton
         onClick={() => {
           setIsRecommendOpen((prevState) => !prevState);
-          console.log(isRecommendOpen);
         }}
       >
         <span>모든추천</span>
         <StyledArrow src={isRecommendOpen ? IconArrowUp : IconArrowDown} />
         {isRecommendOpen && (
-          <DropBox text={DROPBOXALLRECOMMEND.title} options={DROPBOXALLRECOMMEND.options} />
+          <DropBox text={DROPBOX_ALLRECOMMEND.title} options={DROPBOX_ALLRECOMMEND.options} />
         )}
       </StyledRecommendButton>
       <StyledSearchBar
         value={searchText}
         onChange={(e) => {
           setSearchText(e.target.value);
-          console.log(searchText);
         }}
       />
       <StyledIconWrapper>
         <StyledIconAdd
           onClick={() => {
             setIsMakeOpen((prevState) => !prevState);
-            console.log(setIsMakeOpen);
           }}
         >
           <img src={IconAddBtn} alt="AddButton" />
-          {isMakeOpen && <DropBox text={DROPBOXMAKE.title} options={DROPBOXMAKE.options} />}
+          {isMakeOpen && <DropBox text={DROPBOX_MAKE.title} options={DROPBOX_MAKE.options} />}
         </StyledIconAdd>
-        <StyledIconNotice>
-          <img src={IconNoticeBtn} alt="Notice" />
-        </StyledIconNotice>
+
+        <StyledIconNotice img src={IconNoticeBtn} alt="Notice" />
         <StyledIconMessage>
           <img src={IconMessageBtn} alt="Message" />
         </StyledIconMessage>
@@ -97,7 +93,7 @@ const StyledLogoWrapper = styled.div`
 
 const StyledRecommendButton = styled.button`
   border: none;
-  /* position: relative; */
+
   height: 5.5rem;
   width: 15.2rem;
   border-radius: 3rem;
@@ -129,7 +125,7 @@ const StyledIconWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const StyledIconNotice = styled.div``;
+const StyledIconNotice = styled.img``;
 const StyledIconUserLogo = styled.img`
   height: 2.8rem;
   width: 2.8rem;

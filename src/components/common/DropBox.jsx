@@ -22,8 +22,7 @@ function DropBox(props) {
       left: 9.3rem;
     `,
     만들기: css`
-      top: 8.7rem;
-      right: 34rem;
+      top: 9rem;
     `,
   };
 
