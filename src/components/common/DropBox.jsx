@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 
 function DropBox(props) {
-  const { text, options } = props;
+  const { text, options, onClick } = props;
 
   console.log(text);
   const dropBoxStatus = {
@@ -31,7 +31,9 @@ function DropBox(props) {
     <StyledRoot status={dropBoxStatus[text]}>
       <StyledText>{text}</StyledText>
       {options.map((option) => (
-        <StyledOption key={option}>{option}</StyledOption>
+        <StyledOption key={option} onClick={() => onClick(option)}>
+          {option}
+        </StyledOption>
       ))}
     </StyledRoot>
   );
