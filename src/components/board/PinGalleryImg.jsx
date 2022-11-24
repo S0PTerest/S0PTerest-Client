@@ -26,37 +26,41 @@ function PinGalleryImg() {
       {pin.map(({ imageUrl, title, creator }, index) => {
         return (
           <StyledGalleryImg key={index}>
-            {isHovering ? (
-              <StyledDim>
-                <div>
-                  <span>
-                    <h1>모든 핀</h1>
-                    <IDimMenu />
-                  </span>
-                  <span>저장</span>
+            <div className="wrapImage">
+              {isHovering ? (
+                <StyledDim>
+                  <div>
+                    <span>
+                      <h1>모든 핀</h1>
+                      <IDimMenu />
+                    </span>
+                    <span>저장</span>
+                  </div>
+                </StyledDim>
+              ) : (
+                ''
+              )}
+              <img
+                src={imageUrl}
+                alt="갤러리 이미지"
+                onMouseOver={() => setIsHovering(1)}
+                onMouseOut={() => setIsHovering(0)}
+              />
+              {isHovering ? (
+                <div className="dimMenu">
+                  <IMenu />
                 </div>
-              </StyledDim>
-            ) : (
-              ''
-            )}
-            <img
-              src={imageUrl}
-              alt="갤러리 이미지"
-              onMouseOver={() => setIsHovering(1)}
-              onMouseOut={() => setIsHovering(0)}
-            />
-            {isHovering ? (
-              <div className="dimMenu">
-                <IMenu />
+              ) : (
+                ''
+              )}
+              <div className="wrapUser">
+                <StyledTitle>{title}</StyledTitle>
+                <StyledUser>
+                  <img src={creator.profileImageUrl} alt="유저 이미지 " />
+                  <span>{creator.name}</span>
+                </StyledUser>
               </div>
-            ) : (
-              ''
-            )}
-            <StyledTitle>{title}</StyledTitle>
-            <StyledUser>
-              <img src={creator.profileImageUrl} alt="유저 이미지 " />
-              <span>{creator.name}</span>
-            </StyledUser>
+            </div>
           </StyledGalleryImg>
         );
       })}
@@ -78,20 +82,27 @@ const StyledRoot = styled.div`
 `;
 
 const StyledGalleryImg = styled.div`
-  display: inline-block;
+  display: flex;
   flex-direction: column;
   margin-bottom: 3.4em;
 
-  & > img {
-    width: 28.8rem;
-    border-radius: 1.6rem;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
+  .wrapImage {
+    display: inline-block;
+    & > img {
+      width: 28.8rem;
+      border-radius: 1.6rem;
+      cursor: pointer;
+      position: relative;
+      z-index: 0;
 
-    &:hover {
-      filter: grayscale(0.4);
+      &:hover {
+        filter: grayscale(0.4);
+      }
     }
+  }
+
+  .wrapUser {
+    display: inline-block;
   }
 `;
 
