@@ -79,15 +79,7 @@ const StyledRoot = styled(Link)`
   flex-direction: column;
   min-width: 33rem;
   margin-left: 0.5rem;
-  overflow-y: scroll;
   padding-right: 2.1rem;
-  ::-webkit-scrollbar {
-    width: 0.8rem;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: ${pinterestColors.gray300};
-    border-radius: 1.8rem;
-  }
 `;
 
 const StyledCreateButton = styled(Link)`

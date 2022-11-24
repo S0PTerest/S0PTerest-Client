@@ -5,12 +5,10 @@ import { pinterestColors } from '../../styles/color';
 function DropBox(props) {
   const { text, options, onClick } = props;
 
-  console.log(text);
   const dropBoxStatus = {
     '노트 옵션': css`
       top: 5.1rem;
       right: -11rem;
-      background-color: red;
     `,
 
     '정렬 기준': css`
