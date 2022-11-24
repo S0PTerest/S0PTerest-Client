@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as IMenu } from '../../assets/iMenu.svg';
 import { ReactComponent as IDimMenu } from '../../assets/iDimMenu.svg';
 import { pinterestColors } from '../../styles/color';
@@ -7,19 +7,12 @@ import { getUserPins } from '../../services';
 
 function PinGalleryImg() {
   const [pin, setPin] = useState(null);
-  const imgHover = useRef(null);
-
-  const handleHover = (e) => {
-    e.preventDefault();
-    imgHover.current = css`
-      display: none;
-    `;
-    console.log(imgHover.current.style);
-  };
+  const [isHovering, setIsHovering] = useState(0);
+  
+  
   const getPinData = async () => {
     const { data } = await getUserPins('2474a7ac-6b9f-47c9-b113-a3422d902cbe');
     setPin(data['pin']);
-    console.log(data.pin.pin[0].imageUrl);
   };
   useEffect(() => {
     getPinData();
@@ -32,7 +25,8 @@ function PinGalleryImg() {
       {pin.map(({ imageUrl, title, creator }, index) => {
         return (
           <StyledGalleryImg key={index}>
-            <StyledDim ref={imgHover}>
+           {isHovering ? ( 
+           <StyledDim>
               <div>
                 <span>
                   <h1>모든 핀</h1>
@@ -40,11 +34,14 @@ function PinGalleryImg() {
                 </span>
                 <span>저장</span>
               </div>
-            </StyledDim>
-            <img src={imageUrl} alt="갤러리 이미지" onMouseEnter={handleHover} />
+            </StyledDim>) : ( ""
+           )}
+            <img src={imageUrl} alt="갤러리 이미지" onMouseOver={() => setIsHovering(1)} onMouseOut={() => setIsHovering(0)}/>
+            {isHovering ? ( 
             <div className="dimMenu">
               <IMenu />
-            </div>
+            </div>) : ( ""
+           )}
             <StyledTitle>{title}</StyledTitle>
             <StyledUser>
               <img src={creator.profileImageUrl} alt="유저 이미지 " />
@@ -125,6 +122,7 @@ const StyledDim = styled.div`
   line-height: 22px;
   align-items: center;
   z-index: 1;
+  
 
   & > div:nth-child(1) {
     display: flex;
