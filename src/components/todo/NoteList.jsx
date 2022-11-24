@@ -36,8 +36,8 @@ function NoteList(props) {
   };
 
   return (
-    <StyledRoot>
-      <StyledCreateButton to="/todo" onClick={() => handleNote(null)}>
+    <StyledRoot to="/todo">
+      <StyledCreateButton onClick={() => handleNote(null)}>
         <h1>노트 만들기</h1>
         <IPlus />
       </StyledCreateButton>
@@ -74,7 +74,7 @@ function NoteList(props) {
 
 export default NoteList;
 
-const StyledRoot = styled.div`
+const StyledRoot = styled(Link)`
   display: flex;
   flex-direction: column;
   min-width: 33rem;
