@@ -29,6 +29,12 @@ function NoteList(props) {
     handleNote(idx);
   };
 
+  const onClickDropBoxUpdateOption = (option) => {
+    if (option === '수정') {
+      setDropBoxStatus(null);
+    }
+  };
+
   return (
     <StyledRoot>
       <StyledCreateButton to="/todo" onClick={() => handleNote(null)}>
@@ -40,7 +46,11 @@ function NoteList(props) {
         {notes.map(({ title, date, uid }, idx) => (
           <StyledNote key={uid} isOpen={noteStatus[idx]}>
             {dropBoxStatus[idx] && (
-              <DropBox text={dropBoxData.text} options={dropBoxData.options} />
+              <DropBox
+                text={dropBoxData.text}
+                options={dropBoxData.options}
+                onClick={(option) => onClickDropBoxUpdateOption(option)}
+              />
             )}
 
             <div onClick={(e) => openNote(e, idx)}>

@@ -34,7 +34,6 @@ function Todo() {
     const { data } = await getNotes(BOARD_ID);
     setNotes(data.notes);
   };
-
   const checkTitleMaxLength = () => {
     if (title.length > 50) {
       setTitle(title.slice(0, 50));

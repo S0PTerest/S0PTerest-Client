@@ -183,6 +183,7 @@ const StyledSaveButton = styled.button`
   line-height: 2.2rem;
   color: ${({ active }) => (active ? pinterestColors.white : pinterestColors.gray400)};
   background-color: ${({ active }) => (active ? pinterestColors.primary : pinterestColors.gray200)};
+  cursor: pointer;
 `;
 
 const StyledToolWrapper = styled.div`
@@ -228,6 +229,7 @@ const StyledPin = styled.div`
 const StyledImageWrapper = styled.div`
   position: relative;
   width: 12.5rem;
+  cursor: pointer;
   &:not(:last-child) {
     margin-bottom: 11px;
   }

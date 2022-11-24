@@ -26,3 +26,8 @@ export const updateNote = async (boardId, noteId, body) => {
   const { data } = await api.put({ url: `/boards/${boardId}/notes/${noteId}`, data: body });
   return { data };
 };
+
+export const getBoards = async () => {
+  const { data } = await api.get({ url: '/boards' });
+  return { data };
+};
