@@ -35,7 +35,7 @@ function Header() {
 
   return (
     <StyledHeaderWrapper>
-      <StyledLogoWrapper>
+      <StyledLogoWrapper to="/">
         <img src={IconLogo} alt="Logo" />
       </StyledLogoWrapper>
       <StyledRecommendButton
@@ -86,7 +86,7 @@ const StyledHeaderWrapper = styled.div`
   width: 189.6rem;
 `;
 
-const StyledLogoWrapper = styled.div`
+const StyledLogoWrapper = styled(Link)`
   width: 2.8rem;
   height: 2.8rem;
   margin-left: 2.9rem;
