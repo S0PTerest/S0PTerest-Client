@@ -96,7 +96,7 @@ export default Header;
 const StyledHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   height: 11.7rem;
 `;
 
@@ -107,14 +107,13 @@ const StyledLogoWrapper = styled(Link)`
 
 const StyledRecommendButton = styled.button`
   border: none;
-
   height: 5.5rem;
   width: 15.2rem;
   border-radius: 3rem;
   background-color: ${pinterestColors.black};
   color: ${pinterestColors.white};
   font-size: 1.8rem;
-  margin-left: 2.9rem;
+  margin-left: 5.7rem;
   cursor: pointer;
 `;
 
@@ -184,7 +183,6 @@ const StyledArrow = styled.img`
 const StyledIconWrapper = styled.div`
   display: flex;
   margin-left: 5.9rem;
-  width: 20rem;
   gap: 4.7rem;
 `;
 
