@@ -4,11 +4,10 @@ import { ReactComponent as IDimMenu } from '../../assets/iDimMenu.svg';
 import { pinterestColors } from '../../styles/color';
 import styled from 'styled-components';
 
-
 function PinGalleryImg(props) {
   const { pin } = props;
   const [isHovering, setIsHovering] = useState(-1);
-  
+
   const handleShow = (index) => {
     setIsHovering(index);
   };
@@ -17,10 +16,9 @@ function PinGalleryImg(props) {
     setIsHovering(-1);
   };
 
-
   return (
     <StyledRoot>
-      {pin.map(({ uid, imageUrl, title, creator }) => {
+      {pin.map(({ uid, imageUrl, title, creator }, index) => {
         return (
           <StyledGalleryImg key={uid}>
             <div className="wrapImage">

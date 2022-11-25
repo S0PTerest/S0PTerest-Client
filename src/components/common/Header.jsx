@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import IconLogo from '../../assets/icon_logo.svg';
 import IconArrowUp from '../../assets/icon_arrow_up.svg';
 import IconArrowDown from '../../assets/icon_arrow_down.svg';
+import { ReactComponent as IcArrowDown } from '../../assets/icon_arrow_down.svg';
 import IconAddBtn from '../../assets/icon_add_btn.svg';
 import IconNoticeBtn from '../../assets/icon_notice_btn.svg';
 import IconMessageBtn from '../../assets/icon_message.svg';
@@ -22,6 +23,7 @@ const DROPBOX_MAKE = {
   options: ['핀', '아이디어 핀', '보드'],
 };
 function Header() {
+  const { pathname } = useLocation();
   const [isRecommendOpen, setIsRecommendOpen] = useState(false);
   const [isMakeOpen, setIsMakeOpen] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -60,6 +62,12 @@ function Header() {
             setSearchText(e.target.value);
           }}
         />
+        {(pathname.includes('/board') || pathname.includes('/todo')) && (
+          <div>
+            <span>내 핀</span>
+            <IcArrowDown />
+          </div>
+        )}
       </StyledSearch>
       <StyledIconWrapper>
         <StyledIconAdd
@@ -88,7 +96,7 @@ export default Header;
 const StyledHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 100vw;
   height: 11.7rem;
 `;
 
@@ -99,14 +107,13 @@ const StyledLogoWrapper = styled(Link)`
 
 const StyledRecommendButton = styled.button`
   border: none;
-
   height: 5.5rem;
   width: 15.2rem;
   border-radius: 3rem;
   background-color: ${pinterestColors.black};
   color: ${pinterestColors.white};
   font-size: 1.8rem;
-  margin-left: 2.9rem;
+  margin-left: 5.7rem;
   cursor: pointer;
 `;
 
@@ -122,6 +129,28 @@ const StyledSearch = styled.div`
     position: absolute;
     left: 4.5rem;
     z-index: 9;
+  }
+  & > div {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 3rem;
+    display: flex;
+    border-left: 3px solid #c9c9c9;
+    & > span {
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 22px;
+
+      color: #111111;
+      margin-left: 2.6rem;
+    }
+    & > svg {
+      margin-left: 1rem;
+      & > path {
+        stroke: #111111;
+      }
+    }
   }
 `;
 
@@ -154,7 +183,6 @@ const StyledArrow = styled.img`
 const StyledIconWrapper = styled.div`
   display: flex;
   margin-left: 5.9rem;
-  width: 20rem;
   gap: 4.7rem;
 `;
 
