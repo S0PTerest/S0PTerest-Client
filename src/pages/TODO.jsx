@@ -170,7 +170,7 @@ const StyledNoteTitle = styled.input`
 `;
 
 const StyledNoteContent = styled.textarea`
-  height: 30rem;
+  height: calc(100vh - 20rem);
   border: none;
   &:focus {
     outline: none;
