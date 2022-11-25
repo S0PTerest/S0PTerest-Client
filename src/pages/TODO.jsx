@@ -121,7 +121,7 @@ function Todo() {
         <Palette
           pins={boardPins}
           isActive={activeSaveButton}
-          onClickSaveButton={(pinIds) => onClickSaveButton([pinIds])}
+          onClickSaveButton={(pinIds) => onClickSaveButton(pinIds)}
         />
       </StyledMain>
     </StyledRoot>

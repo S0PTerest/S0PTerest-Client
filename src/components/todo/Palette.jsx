@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPluspin } from '../../assets/iPluspin.svg';
@@ -20,16 +20,20 @@ const secondLineTools = [iBulletpoint, iNumberpoint, iCheckbox];
 function Palette(props) {
   const { pins, isActive, onClickSaveButton } = props;
   const [isSelected, setIsSelected] = useState('textstyle');
-  const [pinStatus, setPinStatus] = useState(Array(pins.length).fill(false));
+  const [selectedPinIds, setSelectedPinIds] = useState(new Set());
 
   const selectTool = (tool) => {
     setIsSelected(tool);
   };
 
-  const selectPin = (idx) => {
-    let newStatus = [...pinStatus];
-    newStatus[idx] = !newStatus[idx];
-    setPinStatus(newStatus);
+  const selectPin = (id) => {
+    const updatedSelectedPinId = new Set(selectedPinIds);
+    if (updatedSelectedPinId.has(id)) {
+      updatedSelectedPinId.delete(id);
+    } else {
+      updatedSelectedPinId.add(id);
+    }
+    setSelectedPinIds(updatedSelectedPinId);
   };
 
   return (
@@ -50,7 +54,7 @@ function Palette(props) {
         <StyledSaveButton
           active={isActive}
           disabled={!isActive}
-          onClick={() => onClickSaveButton('4c67926c-2927-4c38-b670-af43498e1772')}
+          onClick={() => onClickSaveButton([...selectedPinIds])}
         >
           저장
         </StyledSaveButton>
@@ -79,11 +83,11 @@ function Palette(props) {
             {pins.map(({ uid, imageUrl }, idx) => {
               if (idx < pins.length / 2) {
                 return (
-                  <StyledPin key={uid} onClick={() => selectPin(idx)}>
+                  <StyledPin key={uid} onClick={() => selectPin(uid)}>
                     <StyledImageWrapper>
-                      <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
+                      <StyledBackground isSelected={selectedPinIds.has(uid)}></StyledBackground>
                       <img src={imageUrl} />
-                      {pinStatus[idx] && <StyledIcCheck />}
+                      {selectedPinIds.has(uid) && <StyledIcCheck />}
                     </StyledImageWrapper>
                   </StyledPin>
                 );
@@ -94,11 +98,11 @@ function Palette(props) {
             {pins.map(({ uid, imageUrl }, idx) => {
               if (idx >= pins.length / 2) {
                 return (
-                  <StyledPin key={uid} onClick={() => selectPin(idx)}>
+                  <StyledPin key={uid} onClick={() => selectPin(uid)}>
                     <StyledImageWrapper>
-                      <StyledBackground isSelected={pinStatus[idx]}></StyledBackground>
+                      <StyledBackground isSelected={selectedPinIds.has(uid)}></StyledBackground>
                       <img src={imageUrl} />
-                      {pinStatus[idx] && <StyledIcCheck />}
+                      {selectedPinIds.has(uid) && <StyledIcCheck />}
                     </StyledImageWrapper>
                   </StyledPin>
                 );

@@ -63,6 +63,7 @@ const StyledBoardItem = styled.div`
     ${({ idx }) =>
     idx === 1 &&
     css`
+      width: 9.5rem;
       grid-column: 2/3;
       grid-row: 1/2;
       background-color: #a9a9a9;
@@ -70,6 +71,8 @@ const StyledBoardItem = styled.div`
     ${({ idx }) =>
     idx === 2 &&
     css`
+      width: 9.5rem;
+      height: 9.4rem;
       grid-column: 2/3;
       grid-row: 2/3;
       background-color: #c0c0c0;
