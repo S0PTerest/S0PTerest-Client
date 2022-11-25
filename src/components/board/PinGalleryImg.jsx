@@ -1,31 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import { ReactComponent as IMenu } from '../../assets/iMenu.svg';
 import { ReactComponent as IDimMenu } from '../../assets/iDimMenu.svg';
 import { pinterestColors } from '../../styles/color';
 import styled from 'styled-components';
-import { getUserPins } from '../../services';
 
-function PinGalleryImg() {
-  const [pin, setPin] = useState(null);
+function PinGalleryImg(props) {
+  const { pin } = props;
   const [isHovering, setIsHovering] = useState(0);
-
-  const { uid } = useParams();
-  const getPinData = async () => {
-    const { data } = await getUserPins(uid);
-    setPin(data['pin']);
-  };
-  useEffect(() => {
-    getPinData();
-  }, []);
-
-  if (!pin) return;
 
   return (
     <StyledRoot>
-      {pin.map(({ imageUrl, title, creator }, index) => {
+      {pin.map(({ uid, imageUrl, title, creator }) => {
         return (
-          <StyledGalleryImg key={index}>
+          <StyledGalleryImg key={uid}>
             {isHovering ? (
               <StyledDim>
                 <div>
