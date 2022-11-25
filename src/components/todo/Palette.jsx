@@ -54,7 +54,10 @@ function Palette(props) {
         <StyledSaveButton
           active={isActive}
           disabled={!isActive}
-          onClick={() => onClickSaveButton([...selectedPinIds])}
+          onClick={() => {
+            setIsSelected('textstyle');
+            onClickSaveButton([...selectedPinIds]);
+          }}
         >
           저장
         </StyledSaveButton>

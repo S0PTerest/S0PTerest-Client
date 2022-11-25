@@ -155,14 +155,11 @@ const StyledNoteDate = styled.span`
   margin-bottom: 0.6rem;
 `;
 
-const CommonInput = styled.input`
+const StyledNoteTitle = styled.input`
   border: none;
   &:focus {
     outline: none;
   }
-`;
-
-const StyledNoteTitle = styled(CommonInput)`
   font-weight: 700;
   font-size: 3.4rem;
   line-height: 4.1rem;
@@ -172,7 +169,12 @@ const StyledNoteTitle = styled(CommonInput)`
   }
 `;
 
-const StyledNoteContent = styled(CommonInput)`
+const StyledNoteContent = styled.textarea`
+  height: 30rem;
+  border: none;
+  &:focus {
+    outline: none;
+  }
   font-weight: 400;
   font-size: 1.8rem;
   line-height: 2.2rem;
