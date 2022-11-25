@@ -13,7 +13,6 @@ function PinGalleryImg() {
   const { uid } = useParams();
   const getPinData = async () => {
     const { data } = await getUserPins(uid);
-    console.log(data);
     setPin(data['pin']);
   };
   useEffect(() => {

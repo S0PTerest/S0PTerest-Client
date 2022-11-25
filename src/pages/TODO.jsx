@@ -4,7 +4,7 @@ import NoteList from '../components/todo/NoteList';
 import Palette from '../components/todo/Palette';
 import { pinterestColors } from '../styles/color';
 import PinTitle from '../components/board/PinTitle';
-import { getNotes, createNote, updateNote } from '../services';
+import { getNotes, createNote, updateNote, getUserPins } from '../services';
 import { useParams } from 'react-router-dom';
 
 const getToday = (type) => {
@@ -22,6 +22,7 @@ function Todo() {
   const { uid } = useParams();
   const [notes, setNotes] = useState(null);
   const [title, setTitle] = useState('');
+  const [boardPins, setBoardPins] = useState(null);
   const [description, setDescription] = useState('');
   const [currentNoteIndex, setCurrentNoteIndex] = useState(null);
   const [activeSaveButton, setActiveSaveButton] = useState(false);
@@ -33,6 +34,11 @@ function Todo() {
   const fetchNotes = async () => {
     const { data } = await getNotes(uid);
     setNotes(data.notes);
+  };
+
+  const fetchBoardPins = async () => {
+    const { data } = await getUserPins(uid);
+    setBoardPins(data.pin);
   };
 
   const checkTitleMaxLength = () => {
@@ -66,15 +72,16 @@ function Todo() {
       pinIds: !pinIds.length ? [] : pinIds,
     };
     if (!currentNoteIndex) {
-      await createNote(BOARD_ID, body);
+      await createNote(uid, body);
     } else {
-      await updateNote(BOARD_ID, notes[currentNoteIndex].uid, body);
+      await updateNote(uid, notes[currentNoteIndex].uid, body);
     }
     fetchNotes();
   };
 
   useEffect(() => {
     fetchNotes();
+    fetchBoardPins();
   }, []);
 
   useEffect(() => {
@@ -86,7 +93,7 @@ function Todo() {
     setNoteData();
   }, [currentNoteIndex]);
 
-  if (!notes) return;
+  if (!notes || !boardPins) return;
 
   return (
     <StyledRoot>
@@ -112,6 +119,7 @@ function Todo() {
         </StyledNote>
 
         <Palette
+          pins={boardPins}
           isActive={activeSaveButton}
           onClickSaveButton={(pinIds) => onClickSaveButton([pinIds])}
         />
