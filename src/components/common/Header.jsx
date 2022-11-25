@@ -7,6 +7,8 @@ import IconArrowDown from '../../assets/icon_arrow_down.svg';
 import IconAddBtn from '../../assets/icon_add_btn.svg';
 import IconNoticeBtn from '../../assets/icon_notice_btn.svg';
 import IconMessageBtn from '../../assets/icon_message.svg';
+import icSearch from '../../assets/icSearch.svg';
+
 import { pinterestColors } from '../../styles/color';
 import DropBox from './DropBox';
 import { getUser } from '../../services';
@@ -49,12 +51,16 @@ function Header() {
           <DropBox text={DROPBOX_ALLRECOMMEND.title} options={DROPBOX_ALLRECOMMEND.options} />
         )}
       </StyledRecommendButton>
-      <StyledSearchBar
-        value={searchText}
-        onChange={(e) => {
-          setSearchText(e.target.value);
-        }}
-      />
+      <StyledSearch>
+        <img src={icSearch} alt="search icon" />
+        <StyledSearchBar
+          placeholder="검색"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+        />
+      </StyledSearch>
       <StyledIconWrapper>
         <StyledIconAdd
           onClick={() => {
@@ -104,14 +110,41 @@ const StyledRecommendButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledSearchBar = styled.input`
+const StyledSearch = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+
   width: 130.2rem;
   height: 5.5rem;
-  border-radius: 2.75rem;
-  background-color: ${pinterestColors.gray200};
+
+  & > img {
+    position: absolute;
+    left: 4.5rem;
+    z-index: 9;
+  }
+`;
+
+const StyledSearchBar = styled.input`
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 130.2rem;
+  height: 5.5rem;
   border: none;
+  border-radius: 2.75rem;
   outline: none;
   margin-left: 2.5rem;
+  padding-left: 4.7rem;
+  font-size: 1.8rem;
+  background-color: ${pinterestColors.gray200};
+
+  &::placeholder {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #767676;
+  }
 `;
 
 const StyledArrow = styled.img`
