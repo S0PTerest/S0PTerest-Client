@@ -8,7 +8,15 @@ import { getUserPins } from '../../services';
 
 function PinGalleryImg() {
   const [pin, setPin] = useState(null);
-  const [isHovering, setIsHovering] = useState(0);
+  const [isHovering, setIsHovering] = useState(-1);
+  
+  const handleShow = (index) => {
+    setIsHovering(index);
+  };
+
+  const handleHide = () => {
+    setIsHovering(-1);
+  };
 
   const { uid } = useParams();
   const getPinData = async () => {
@@ -27,32 +35,33 @@ function PinGalleryImg() {
         return (
           <StyledGalleryImg key={index}>
             <div className="wrapImage">
-              {isHovering ? (
-                <StyledDim>
-                  <div>
-                    <span>
-                      <h1>모든 핀</h1>
-                      <IDimMenu />
-                    </span>
-                    <span>저장</span>
-                  </div>
-                </StyledDim>
-              ) : (
-                ''
-              )}
+              <StyledDim
+                className={isHovering === index ? 'show' : 'hide'}
+                onMouseLeave={handleHide}
+                onMouseEnter={() => handleShow(index)}
+              >
+                <div>
+                  <span>
+                    <h1>모든 핀</h1>
+                    <IDimMenu />
+                  </span>
+                  <span>저장</span>
+                </div>
+              </StyledDim>
+
               <img
                 src={imageUrl}
                 alt="갤러리 이미지"
-                onMouseOver={() => setIsHovering(1)}
-                onMouseOut={() => setIsHovering(0)}
+                onMouseLeave={handleHide}
+                onMouseEnter={() => handleShow(index)}
               />
-              {isHovering ? (
-                <div className="dimMenu">
-                  <IMenu />
-                </div>
-              ) : (
-                ''
-              )}
+              <div className="dimMenu">
+                <IMenu
+                  className={isHovering === index ? 'show' : 'hide'}
+                  onMouseLeave={handleHide}
+                  onMouseEnter={() => handleShow(index)}
+                />
+              </div>
               <div className="wrapUser">
                 <StyledTitle>{title}</StyledTitle>
                 <StyledUser>
@@ -78,6 +87,14 @@ const StyledRoot = styled.div`
     position: absolute;
     margin-top: -6rem;
     margin-left: 23.1rem;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .hide {
+    display: none;
   }
 `;
 
