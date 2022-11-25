@@ -82,14 +82,13 @@ export default Header;
 const StyledHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
   height: 11.7rem;
-  width: 189.6rem;
 `;
 
 const StyledLogoWrapper = styled(Link)`
   width: 2.8rem;
   height: 2.8rem;
-  margin-left: 2.9rem;
 `;
 
 const StyledRecommendButton = styled.button`
@@ -122,8 +121,8 @@ const StyledArrow = styled.img`
 const StyledIconWrapper = styled.div`
   display: flex;
   margin-left: 5.9rem;
-  width: 18.9rem;
-  justify-content: space-between;
+  width: 20rem;
+  gap: 4.7rem;
 `;
 
 const StyledIconNotice = styled.img``;
