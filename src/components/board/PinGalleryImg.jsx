@@ -4,17 +4,31 @@ import { ReactComponent as IDimMenu } from '../../assets/iDimMenu.svg';
 import { pinterestColors } from '../../styles/color';
 import styled from 'styled-components';
 
+
 function PinGalleryImg(props) {
   const { pin } = props;
-  const [isHovering, setIsHovering] = useState(0);
+  const [isHovering, setIsHovering] = useState(-1);
+  
+  const handleShow = (index) => {
+    setIsHovering(index);
+  };
+
+  const handleHide = () => {
+    setIsHovering(-1);
+  };
+
 
   return (
     <StyledRoot>
       {pin.map(({ uid, imageUrl, title, creator }) => {
         return (
           <StyledGalleryImg key={uid}>
-            {isHovering ? (
-              <StyledDim>
+            <div className="wrapImage">
+              <StyledDim
+                className={isHovering === index ? 'show' : 'hide'}
+                onMouseLeave={handleHide}
+                onMouseEnter={() => handleShow(index)}
+              >
                 <div>
                   <span>
                     <h1>모든 핀</h1>
@@ -23,27 +37,28 @@ function PinGalleryImg(props) {
                   <span>저장</span>
                 </div>
               </StyledDim>
-            ) : (
-              ''
-            )}
-            <img
-              src={imageUrl}
-              alt="갤러리 이미지"
-              onMouseOver={() => setIsHovering(1)}
-              onMouseOut={() => setIsHovering(0)}
-            />
-            {isHovering ? (
+
+              <img
+                src={imageUrl}
+                alt="갤러리 이미지"
+                onMouseLeave={handleHide}
+                onMouseEnter={() => handleShow(index)}
+              />
               <div className="dimMenu">
-                <IMenu />
+                <IMenu
+                  className={isHovering === index ? 'show' : 'hide'}
+                  onMouseLeave={handleHide}
+                  onMouseEnter={() => handleShow(index)}
+                />
               </div>
-            ) : (
-              ''
-            )}
-            <StyledTitle>{title}</StyledTitle>
-            <StyledUser>
-              <img src={creator.profileImageUrl} alt="유저 이미지 " />
-              <span>{creator.name}</span>
-            </StyledUser>
+              <div className="wrapUser">
+                <StyledTitle>{title}</StyledTitle>
+                <StyledUser>
+                  <img src={creator.profileImageUrl} alt="유저 이미지 " />
+                  <span>{creator.name}</span>
+                </StyledUser>
+              </div>
+            </div>
           </StyledGalleryImg>
         );
       })}
@@ -62,23 +77,38 @@ const StyledRoot = styled.div`
     margin-top: -6rem;
     margin-left: 23.1rem;
   }
+
+  .show {
+    display: block;
+  }
+
+  .hide {
+    display: none;
+  }
 `;
 
 const StyledGalleryImg = styled.div`
-  display: inline-block;
+  display: flex;
   flex-direction: column;
   margin-bottom: 3.4em;
 
-  & > img {
-    width: 28.8rem;
-    border-radius: 1.6rem;
-    cursor: pointer;
-    position: relative;
-    z-index: 0;
+  .wrapImage {
+    display: inline-block;
+    & > img {
+      width: 28.8rem;
+      border-radius: 1.6rem;
+      cursor: pointer;
+      position: relative;
+      z-index: 0;
 
-    &:hover {
-      filter: grayscale(0.4);
+      &:hover {
+        filter: grayscale(0.4);
+      }
     }
+  }
+
+  .wrapUser {
+    display: inline-block;
   }
 `;
 
