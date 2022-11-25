@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import IconLogo from '../../assets/icon_logo.svg';
 import IconArrowUp from '../../assets/icon_arrow_up.svg';
 import IconArrowDown from '../../assets/icon_arrow_down.svg';
 import IconAddBtn from '../../assets/icon_add_btn.svg';
 import IconNoticeBtn from '../../assets/icon_notice_btn.svg';
-import IconUserLogo from '../../assets/icon_user_logo.svg';
 import IconMessageBtn from '../../assets/icon_message.svg';
+import icSearch from '../../assets/icSearch.svg';
+
 import { pinterestColors } from '../../styles/color';
 import DropBox from './DropBox';
 import { getUser } from '../../services';
@@ -35,7 +37,7 @@ function Header() {
 
   return (
     <StyledHeaderWrapper>
-      <StyledLogoWrapper>
+      <StyledLogoWrapper to="/">
         <img src={IconLogo} alt="Logo" />
       </StyledLogoWrapper>
       <StyledRecommendButton
@@ -49,12 +51,16 @@ function Header() {
           <DropBox text={DROPBOX_ALLRECOMMEND.title} options={DROPBOX_ALLRECOMMEND.options} />
         )}
       </StyledRecommendButton>
-      <StyledSearchBar
-        value={searchText}
-        onChange={(e) => {
-          setSearchText(e.target.value);
-        }}
-      />
+      <StyledSearch>
+        <img src={icSearch} alt="search icon" />
+        <StyledSearchBar
+          placeholder="검색"
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+        />
+      </StyledSearch>
       <StyledIconWrapper>
         <StyledIconAdd
           onClick={() => {
@@ -69,7 +75,9 @@ function Header() {
         <StyledIconMessage>
           <img src={IconMessageBtn} alt="Message" />
         </StyledIconMessage>
-        <StyledIconUserLogo src={user?.profileImageUrl} alt="IconUser" />
+        <Link to="/profile">
+          <StyledIconUserLogo src={user?.profileImageUrl} alt="IconUser" />
+        </Link>
       </StyledIconWrapper>
     </StyledHeaderWrapper>
   );
@@ -80,15 +88,13 @@ export default Header;
 const StyledHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
   height: 11.7rem;
-  border: 1px solid red;
-  width: 189.6rem;
 `;
 
-const StyledLogoWrapper = styled.div`
+const StyledLogoWrapper = styled(Link)`
   width: 2.8rem;
   height: 2.8rem;
-  margin-left: 2.9rem;
 `;
 
 const StyledRecommendButton = styled.button`
@@ -104,14 +110,41 @@ const StyledRecommendButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledSearchBar = styled.input`
+const StyledSearch = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+
   width: 130.2rem;
   height: 5.5rem;
-  border-radius: 2.75rem;
-  background-color: ${pinterestColors.gray200};
+
+  & > img {
+    position: absolute;
+    left: 4.5rem;
+    z-index: 9;
+  }
+`;
+
+const StyledSearchBar = styled.input`
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 130.2rem;
+  height: 5.5rem;
   border: none;
+  border-radius: 2.75rem;
   outline: none;
   margin-left: 2.5rem;
+  padding-left: 4.7rem;
+  font-size: 1.8rem;
+  background-color: ${pinterestColors.gray200};
+
+  &::placeholder {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #767676;
+  }
 `;
 
 const StyledArrow = styled.img`
@@ -121,8 +154,8 @@ const StyledArrow = styled.img`
 const StyledIconWrapper = styled.div`
   display: flex;
   margin-left: 5.9rem;
-  width: 18.9rem;
-  justify-content: space-between;
+  width: 20rem;
+  gap: 4.7rem;
 `;
 
 const StyledIconNotice = styled.img``;

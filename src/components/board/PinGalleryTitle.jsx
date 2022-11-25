@@ -2,11 +2,13 @@ import React from 'react';
 import { ReactComponent as IDropdown } from '../../assets/IDropdown.svg';
 import styled from 'styled-components';
 
-function PinGalleryTitle() {
+function PinGalleryTitle(props) {
+  const { pin } = props;
+
   return (
     <StyledRoot>
       <StyledInfoPin>
-        <h1>핀 n개</h1>
+        <h1>핀 {pin.length}개</h1>
         <div>아이디어 더보기</div>
       </StyledInfoPin>
       <StyledSortPin>

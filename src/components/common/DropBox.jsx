@@ -5,12 +5,10 @@ import { pinterestColors } from '../../styles/color';
 function DropBox(props) {
   const { text, options, onClick } = props;
 
-  console.log(text);
   const dropBoxStatus = {
     '노트 옵션': css`
       top: 5.1rem;
       right: -11rem;
-      background-color: red;
     `,
 
     '정렬 기준': css`
@@ -18,7 +16,7 @@ function DropBox(props) {
       right: -2rem;
     `,
     '추천 옵션': css`
-      top: 8.7rem;
+      top: 10.7rem;
       left: 9.3rem;
     `,
     만들기: css`
@@ -44,6 +42,7 @@ const StyledRoot = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   width: 18.1rem;
   background: ${pinterestColors.white};
   box-shadow: 0px 0px 3rem 0.4rem rgba(0, 0, 0, 0.06);

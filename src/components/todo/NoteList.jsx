@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import { pinterestColors } from '../../styles/color';
 import { ReactComponent as IPlus } from '../../assets/iPlus.svg';
@@ -7,11 +7,13 @@ import { Link } from 'react-router-dom';
 import BoardItem from '../common/BoardItem';
 import DropBox from '../common/DropBox';
 import { useStatus } from '../../utils/hooks/useStatus';
+import { useParams } from 'react-router-dom';
 
 const dropBoxData = { text: '노트 옵션', options: ['삭제', '수정'] };
 
 function NoteList(props) {
   const { notes, handleNote } = props;
+  const { uid } = useParams();
   const [noteStatus, setNoteStatus] = useStatus(new Array(notes.length).fill(false));
   const [dropBoxStatus, setDropBoxStatus] = useStatus(new Array(notes.length).fill(false));
 
@@ -36,8 +38,8 @@ function NoteList(props) {
   };
 
   return (
-    <StyledRoot>
-      <StyledCreateButton to="/todo" onClick={() => handleNote(null)}>
+    <StyledRoot to={`/todo/${uid}`}>
+      <StyledCreateButton onClick={() => handleNote(null)}>
         <h1>노트 만들기</h1>
         <IPlus />
       </StyledCreateButton>
@@ -74,14 +76,15 @@ function NoteList(props) {
 
 export default NoteList;
 
-const StyledRoot = styled.div`
+const StyledRoot = styled(Link)`
   display: flex;
   flex-direction: column;
-  min-width: 30.3rem;
-  margin: 0 2.1rem 0 0.5rem;
+  min-width: 33rem;
+  margin-left: 0.5rem;
+  padding-right: 2.1rem;
 `;
 
-const StyledCreateButton = styled(Link)`
+const StyledCreateButton = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -102,6 +105,7 @@ const StyledCreateButton = styled(Link)`
 const StyledNoteList = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `;
 
 const StyledNote = styled.div`

@@ -4,7 +4,8 @@ import NoteList from '../components/todo/NoteList';
 import Palette from '../components/todo/Palette';
 import { pinterestColors } from '../styles/color';
 import PinTitle from '../components/board/PinTitle';
-import { getNotes, createNote, updateNote } from '../services';
+import { getNotes, createNote, updateNote, getUserPins } from '../services';
+import { useParams } from 'react-router-dom';
 
 const getToday = (type) => {
   const week = ['월', '화', '수', '목', '금', '토', '일'];
@@ -17,11 +18,11 @@ const getToday = (type) => {
   return `${year}-${month}-${date}`;
 };
 
-const BOARD_ID = '2474a7ac-6b9f-47c9-b113-a3422d902cbe';
-
 function Todo() {
+  const { uid } = useParams();
   const [notes, setNotes] = useState(null);
   const [title, setTitle] = useState('');
+  const [boardPins, setBoardPins] = useState(null);
   const [description, setDescription] = useState('');
   const [currentNoteIndex, setCurrentNoteIndex] = useState(null);
   const [activeSaveButton, setActiveSaveButton] = useState(false);
@@ -31,9 +32,15 @@ function Todo() {
   };
 
   const fetchNotes = async () => {
-    const { data } = await getNotes(BOARD_ID);
+    const { data } = await getNotes(uid);
     setNotes(data.notes);
   };
+
+  const fetchBoardPins = async () => {
+    const { data } = await getUserPins(uid);
+    setBoardPins(data.pin);
+  };
+
   const checkTitleMaxLength = () => {
     if (title.length > 50) {
       setTitle(title.slice(0, 50));
@@ -65,15 +72,16 @@ function Todo() {
       pinIds: !pinIds.length ? [] : pinIds,
     };
     if (!currentNoteIndex) {
-      await createNote(BOARD_ID, body);
+      await createNote(uid, body);
     } else {
-      await updateNote(BOARD_ID, notes[currentNoteIndex].uid, body);
-      fetchNotes();
+      await updateNote(uid, notes[currentNoteIndex].uid, body);
     }
+    fetchNotes();
   };
 
   useEffect(() => {
     fetchNotes();
+    fetchBoardPins();
   }, []);
 
   useEffect(() => {
@@ -85,7 +93,7 @@ function Todo() {
     setNoteData();
   }, [currentNoteIndex]);
 
-  if (!notes) return;
+  if (!notes || !boardPins) return;
 
   return (
     <StyledRoot>
@@ -111,8 +119,9 @@ function Todo() {
         </StyledNote>
 
         <Palette
+          pins={boardPins}
           isActive={activeSaveButton}
-          onClickSaveButton={(pinIds) => onClickSaveButton([pinIds])}
+          onClickSaveButton={(pinIds) => onClickSaveButton(pinIds)}
         />
       </StyledMain>
     </StyledRoot>
@@ -128,6 +137,7 @@ const StyledRoot = styled.div`
 
 const StyledMain = styled.main`
   display: flex;
+  margin-top: 3.2rem;
 `;
 
 const StyledNote = styled.article`
@@ -145,14 +155,11 @@ const StyledNoteDate = styled.span`
   margin-bottom: 0.6rem;
 `;
 
-const CommonInput = styled.input`
+const StyledNoteTitle = styled.input`
   border: none;
   &:focus {
     outline: none;
   }
-`;
-
-const StyledNoteTitle = styled(CommonInput)`
   font-weight: 700;
   font-size: 3.4rem;
   line-height: 4.1rem;
@@ -162,7 +169,12 @@ const StyledNoteTitle = styled(CommonInput)`
   }
 `;
 
-const StyledNoteContent = styled(CommonInput)`
+const StyledNoteContent = styled.textarea`
+  height: calc(100vh - 20rem);
+  border: none;
+  &:focus {
+    outline: none;
+  }
   font-weight: 400;
   font-size: 1.8rem;
   line-height: 2.2rem;
