@@ -15,6 +15,13 @@ function DropBox(props) {
       top: 4rem;
       right: -2rem;
     `,
+    '추천 옵션': css`
+      top: 10.7rem;
+      left: 9.3rem;
+    `,
+    만들기: css`
+      top: 9rem;
+    `,
   };
 
   return (
@@ -35,6 +42,7 @@ const StyledRoot = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   width: 18.1rem;
   background: ${pinterestColors.white};
   box-shadow: 0px 0px 3rem 0.4rem rgba(0, 0, 0, 0.06);

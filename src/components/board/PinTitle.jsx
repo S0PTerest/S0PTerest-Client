@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as IMenu } from '../../assets/iMenu.svg';
 import { ReactComponent as IClickedMenu } from '../../assets/iClickedMenu.svg';
 import { ReactComponent as ActiveUser1 } from '../../assets/activeUser1.svg';
 import { ReactComponent as ActiveUser2 } from '../../assets/activeUser2.svg';
 import { ReactComponent as ActiveUser3 } from '../../assets/activeUser3.svg';
+import { getBoards } from '../../services';
+import { useParams } from 'react-router-dom';
 
 function PinTitle() {
+  const { uid } = useParams();
   const [isIconHover, setIsIconHover] = useState(false);
+  const [boardTitle, setBoardTitle] = useState('');
+  const fetchBoards = async () => {
+    const { data } = await getBoards();
+    const boardList = data.board;
+    setBoardTitle(boardList.filter((board) => board.uid === uid)[0].title);
+  };
+
+  useEffect(() => {
+    fetchBoards();
+  }, []);
+
   return (
     <StyledRoot>
       <StyledTitle>
-        {/* 글자수 제한은 작성 시 검사가 이루어지기 때문에 후에 데이터를 받아오는 과정만 추가해주면 됨. */}
-        <span>민본포_7조 제목이 길어진다면 (50자 제한이라고 함)</span>
+        <span>{boardTitle}</span>
         <span onMouseOver={() => setIsIconHover(true)} onMouseOut={() => setIsIconHover(false)}>
           {isIconHover ? <IClickedMenu /> : <IMenu />}
         </span>

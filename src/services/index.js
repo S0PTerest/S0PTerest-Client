@@ -18,13 +18,11 @@ export const getUser = async () => {
 };
 
 export const createNote = async (boardId, body) => {
-  const { data } = await api.post({ url: `/boards/${boardId}/notes`, data: body });
-  return { data };
+  await api.post({ url: `/boards/${boardId}/notes`, data: body });
 };
 
 export const updateNote = async (boardId, noteId, body) => {
-  const { data } = await api.put({ url: `/boards/${boardId}/notes/${noteId}`, data: body });
-  return { data };
+  await api.put({ url: `/boards/${boardId}/notes/${noteId}`, data: body });
 };
 
 export const getBoards = async () => {

@@ -15,7 +15,7 @@ function Router() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/board/:uid" element={<Board />}></Route>
-          <Route path="/todo" element={<Todo />}></Route>
+          <Route path="/todo/:uid" element={<Todo />}></Route>
         </Routes>
       </BrowserRouter>
     </>
